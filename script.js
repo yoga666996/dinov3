@@ -1,251 +1,493 @@
-// DOM Elements
-const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-const navMenu = document.querySelector('.nav-menu');
-const faqItems = document.querySelectorAll('.faq-item');
-const scrollAnimationElements = document.querySelectorAll('.scroll-animation');
-
-// Mobile Menu Toggle
-mobileMenuToggle?.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    mobileMenuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
-});
-
-// FAQ Accordion with Accessibility
-faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
-    const answer = item.querySelector('.faq-answer');
+// Smooth scrolling for navigation links
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle (if needed in future)
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    question.addEventListener('click', () => {
-        const isExpanded = question.getAttribute('aria-expanded') === 'true';
-        
-        // Close all FAQ items
-        faqItems.forEach(faqItem => {
-            const btn = faqItem.querySelector('.faq-question');
-            const content = faqItem.querySelector('.faq-answer');
-            
-            btn.setAttribute('aria-expanded', 'false');
-            faqItem.classList.remove('active');
-            content.style.display = 'none';
-        });
-        
-        // Open clicked item if it wasn't expanded
-        if (!isExpanded) {
-            question.setAttribute('aria-expanded', 'true');
-            item.classList.add('active');
-            answer.style.display = 'block';
-        }
-    });
-    
-    // Keyboard support
-    question.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            question.click();
-        }
-    });
-});
-
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Scroll Animation Observer
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-        }
-    });
-}, observerOptions);
-
-// Observe elements for scroll animation
-document.querySelectorAll('.feature-card, .review-card, .showcase-item, .faq-item').forEach(el => {
-    el.classList.add('scroll-animation');
-    observer.observe(el);
-});
-
-// Banana Image Upload Simulation with Analytics
-const uploadZone = document.querySelector('.upload-zone');
-const galleryPlaceholder = document.querySelector('.gallery-placeholder');
-
-uploadZone?.addEventListener('click', () => {
-    // Send Google Analytics event for banana image upload attempt
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'banana_image_upload_started', {
-            event_category: 'NanoBanana_Core_Feature',
-            event_label: 'Upload_Zone_Click',
-            custom_parameter_1: 'banana_editor_section',
-            custom_parameter_2: 'upload_interaction'
-        });
-    }
-    
-    // Simulate file upload
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.style.display = 'none';
-    
-    fileInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            // Track actual file selection
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'banana_image_file_selected', {
-                    event_category: 'NanoBanana_Core_Feature',
-                    event_label: 'File_Selected',
-                    custom_parameter_1: file.type,
-                    custom_parameter_2: Math.round(file.size / 1024) + 'KB'
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
                 });
             }
-            simulateImageProcessing();
+        });
+    });
+
+    // Header background on scroll
+    const header = document.querySelector('.header');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(10, 10, 10, 0.98)';
+        } else {
+            header.style.background = 'rgba(10, 10, 10, 0.95)';
         }
     });
-    
-    document.body.appendChild(fileInput);
-    fileInput.click();
-    document.body.removeChild(fileInput);
-});
 
-// Simulate banana image processing with Analytics
-function simulateImageProcessing() {
-    const placeholderItems = document.querySelectorAll('.placeholder-item');
-    const startTime = Date.now();
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements for animation
+    const animatedElements = document.querySelectorAll('.feature-card, .application-card, .resource-card, .timeline-item');
     
-    // Send processing start event
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'banana_image_processing_started', {
-            event_category: 'NanoBanana_Core_Feature',
-            event_label: 'Processing_Started',
-            custom_parameter_1: 'simulation',
-            custom_parameter_2: placeholderItems.length + '_placeholders'
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    // Active navigation link highlighting
+    const sections = document.querySelectorAll('section[id]');
+    
+    function highlightNavLink() {
+        const scrollPosition = window.scrollY + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
         });
     }
     
-    // Add loading animation
-    placeholderItems.forEach((item, index) => {
-        setTimeout(() => {
-            item.style.background = 'linear-gradient(135deg, #f59e0b, #eab308)';
-            item.style.animation = 'pulse 1s ease-in-out infinite';
-        }, index * 200);
-    });
-    
-    // Simulate completion
-    setTimeout(() => {
-        const endTime = Date.now();
-        const processingTime = endTime - startTime;
+    window.addEventListener('scroll', highlightNavLink);
+
+    // Statistics counter animation
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
         
-        placeholderItems.forEach(item => {
-            item.style.animation = 'none';
-            item.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-            item.innerHTML = '<div style="color: white; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; height: 100%;">🍌✓</div>';
+        counters.forEach(counter => {
+            const target = counter.textContent;
+            const isNumber = !isNaN(target.replace(/[^\d]/g, ''));
+            
+            if (isNumber) {
+                const finalNumber = parseInt(target.replace(/[^\d]/g, ''));
+                const suffix = target.replace(/[\d]/g, '');
+                let current = 0;
+                const increment = finalNumber / 100;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= finalNumber) {
+                        counter.textContent = finalNumber + suffix;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + suffix;
+                    }
+                }, 20);
+            }
+        });
+    }
+
+    // Trigger counter animation when performance section is visible
+    const performanceSection = document.querySelector('.performance');
+    const performanceObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                performanceObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    if (performanceSection) {
+        performanceObserver.observe(performanceSection);
+    }
+
+    // Video loading optimization
+    const videoContainer = document.querySelector('.video-container iframe');
+    if (videoContainer) {
+        // Add loading attribute for better performance
+        videoContainer.setAttribute('loading', 'lazy');
+        
+        // Optional: Lazy load video on scroll
+        const videoObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const iframe = entry.target;
+                    if (!iframe.src) {
+                        iframe.src = iframe.dataset.src;
+                    }
+                    videoObserver.unobserve(iframe);
+                }
+            });
         });
         
-        // Send processing completion event
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'banana_image_processing_completed', {
-                event_category: 'NanoBanana_Core_Feature',
-                event_label: 'Processing_Completed',
-                custom_parameter_1: processingTime + 'ms',
-                custom_parameter_2: 'success',
-                value: Math.round(processingTime / 100) // Convert to meaningful number for GA
-            });
+        // Store original src and replace with data-src for lazy loading
+        if (videoContainer.src) {
+            videoContainer.dataset.src = videoContainer.src;
+            // Comment out the next line if you want immediate loading
+            // videoContainer.src = '';
+            // videoObserver.observe(videoContainer);
         }
-    }, 3000);
-}
+    }
 
-// Tab Switching
-const tabButtons = document.querySelectorAll('.tab-btn');
+    // Copy to clipboard functionality for code snippets (if any)
+    function addCopyButtons() {
+        const codeBlocks = document.querySelectorAll('pre, code');
+        
+        codeBlocks.forEach(block => {
+            if (block.textContent.length > 50) {
+                const copyButton = document.createElement('button');
+                copyButton.textContent = 'Copy';
+                copyButton.className = 'copy-button';
+                copyButton.style.cssText = `
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background: #ff6b35;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 12px;
+                `;
+                
+                block.style.position = 'relative';
+                block.appendChild(copyButton);
+                
+                copyButton.addEventListener('click', function() {
+                    navigator.clipboard.writeText(block.textContent.replace('Copy', ''));
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyButton.textContent = 'Copy';
+                    }, 2000);
+                });
+            }
+        });
+    }
+    
+    addCopyButtons();
 
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove active class from all tabs
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked tab
-        button.classList.add('active');
-    });
-});
+    // FAQ accordion functionality
+    function initializeFAQ() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('h3');
+            const answer = item.querySelector('[itemprop="acceptedAnswer"]');
+            
+            // Initially hide all answers
+            answer.style.maxHeight = '0';
+            answer.style.overflow = 'hidden';
+            answer.style.transition = 'max-height 0.3s ease';
+            
+            question.addEventListener('click', function() {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('[itemprop="acceptedAnswer"]');
+                        otherAnswer.style.maxHeight = '0';
+                    }
+                });
+                
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                    answer.style.maxHeight = '0';
+                } else {
+                    item.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+                
+                // Track FAQ interactions for analytics
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'faq_interaction', {
+                        'faq_question': question.textContent,
+                        'action': isActive ? 'close' : 'open'
+                    });
+                }
+            });
+        });
+    }
+    
+    initializeFAQ();
 
-// Launch Button Actions with Analytics
-document.querySelectorAll('.launch-btn, .btn-primary').forEach(button => {
-    button.addEventListener('click', () => {
-        // Send Google Analytics event for banana image editor access
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'banana_editor_access', {
-                event_category: 'NanoBanana_Engagement',
-                event_label: 'Editor_Button_Click',
-                custom_parameter_1: button.textContent.trim(),
-                custom_parameter_2: 'hero_section'
+    // Parallax effect for hero section
+    function parallaxEffect() {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero');
+        
+        if (hero && scrolled < window.innerHeight) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    }
+    
+    window.addEventListener('scroll', parallaxEffect);
+
+    // Enhanced analytics tracking for SEO insights
+    function trackUserEngagement() {
+        // Track time on page
+        let timeOnPage = 0;
+        const startTime = Date.now();
+        
+        setInterval(() => {
+            timeOnPage = Math.floor((Date.now() - startTime) / 1000);
+            
+            // Track engagement milestones
+            if (timeOnPage === 30 || timeOnPage === 60 || timeOnPage === 120) {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'engagement_time', {
+                        'time_seconds': timeOnPage,
+                        'engagement_level': timeOnPage > 60 ? 'high' : 'medium'
+                    });
+                }
+            }
+        }, 1000);
+        
+        // Track scroll depth
+        let maxScrollDepth = 0;
+        window.addEventListener('scroll', function() {
+            const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            
+            if (scrollDepth > maxScrollDepth && scrollDepth % 25 === 0) {
+                maxScrollDepth = scrollDepth;
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'scroll_depth', {
+                        'depth_percentage': scrollDepth
+                    });
+                }
+            }
+        });
+        
+        // Track outbound link clicks
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('a[href^="http"]') || e.target.closest('a[href^="http"]')) {
+                const link = e.target.matches('a') ? e.target : e.target.closest('a');
+                if (link.hostname !== window.location.hostname) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'outbound_click', {
+                            'destination': link.href,
+                            'link_text': link.textContent
+                        });
+                    }
+                }
+            }
+        });
+    }
+    
+    trackUserEngagement();
+
+    // Video interaction functionality
+    function initializeVideoFeatures() {
+        const videoContainer = document.querySelector('.video-container');
+        const videoOverlay = document.querySelector('.video-overlay');
+        const iframe = document.querySelector('#hero-video');
+        
+        // Initially show overlay
+        if (videoOverlay) {
+            videoOverlay.style.opacity = '1';
+        }
+        
+        // Hide overlay after video interaction
+        if (iframe) {
+            iframe.addEventListener('load', function() {
+                // Set up video event listeners if YouTube API is available
+                if (window.YT && window.YT.Player) {
+                    const player = new YT.Player('hero-video', {
+                        events: {
+                            'onStateChange': function(event) {
+                                if (event.data == YT.PlayerState.PLAYING) {
+                                    videoOverlay.style.opacity = '0';
+                                    
+                                    // Track video play for analytics
+                                    if (typeof gtag !== 'undefined') {
+                                        gtag('event', 'video_play', {
+                                            'video_title': 'DINOv3 Research Video',
+                                            'video_url': 'https://www.youtube.com/watch?v=-eOYWK6m3i8'
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
             });
         }
         
-        // Scroll to banana editor section
-        const bananaEditor = document.getElementById('banana-editor');
-        if (bananaEditor) {
-            bananaEditor.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        // Add click tracking for video stats
+        const statItems = document.querySelectorAll('.stat-item');
+        statItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const statText = this.querySelector('.stat-text').textContent;
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'stat_click', {
+                        'stat_type': statText
+                    });
+                }
+            });
+        });
+    }
+    
+    initializeVideoFeatures();
+
+    // Global function for play button
+    window.playVideo = function() {
+        const iframe = document.querySelector('#hero-video');
+        const videoOverlay = document.querySelector('.video-overlay');
+        
+        if (iframe && iframe.contentWindow) {
+            // Send play command to YouTube iframe
+            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            
+            // Hide overlay
+            if (videoOverlay) {
+                videoOverlay.style.opacity = '0';
+            }
+            
+            // Track manual play button click
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'play_button_click', {
+                    'video_title': 'DINOv3 Research Video',
+                    'interaction_type': 'manual_play'
+                });
+            }
+        }
+    };
+
+    // Enhanced video visibility tracking
+    function setupVideoIntersectionObserver() {
+        const videoContainer = document.querySelector('.video-container');
+        
+        const videoObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Video is in viewport
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'video_in_viewport', {
+                            'video_title': 'DINOv3 Research Video'
+                        });
+                    }
+                    
+                    // Add subtle animation when video comes into view
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out';
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        if (videoContainer) {
+            videoObserver.observe(videoContainer);
+        }
+    }
+    
+    setupVideoIntersectionObserver();
+
+    // Dark mode toggle (optional feature)
+    function createDarkModeToggle() {
+        const toggle = document.createElement('button');
+        toggle.innerHTML = '<i class="fas fa-moon"></i>';
+        toggle.className = 'dark-mode-toggle';
+        toggle.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        `;
+        
+        // Since the site is already dark, this would toggle to light mode
+        toggle.addEventListener('click', function() {
+            document.body.classList.toggle('light-mode');
+            toggle.innerHTML = document.body.classList.contains('light-mode') 
+                ? '<i class="fas fa-sun"></i>' 
+                : '<i class="fas fa-moon"></i>';
+        });
+        
+        document.body.appendChild(toggle);
+    }
+    
+    // Uncomment if you want dark mode toggle
+    // createDarkModeToggle();
+
+    // Form validation (if contact form is added)
+    function setupFormValidation() {
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const inputs = form.querySelectorAll('input[required], textarea[required]');
+                let isValid = true;
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.style.borderColor = '#ff4444';
+                    } else {
+                        input.style.borderColor = '#ff6b35';
+                    }
+                });
+                
+                if (isValid) {
+                    // Handle form submission
+                    console.log('Form submitted successfully');
+                    // You can add actual form submission logic here
+                }
+            });
+        });
+    }
+    
+    setupFormValidation();
+
+    // Performance monitoring
+    function trackPerformance() {
+        if ('performance' in window) {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const perfData = performance.timing;
+                    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                    console.log(`Page load time: ${pageLoadTime}ms`);
+                    
+                    // You can send this data to analytics
+                }, 0);
             });
         }
-    });
-});
-
-// Header scroll effect
-let lastScrollY = window.scrollY;
-const header = document.querySelector('.header');
-
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    
-    if (currentScrollY > 100) {
-        header.style.background = 'rgba(10, 10, 10, 0.98)';
-    } else {
-        header.style.background = 'rgba(10, 10, 10, 0.95)';
     }
     
-    lastScrollY = currentScrollY;
+    trackPerformance();
 });
 
-// Add pulse animation for loading
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes pulse {
-        0% { opacity: 1; }
-        50% { opacity: 0.5; }
-        100% { opacity: 1; }
-    }
-`;
-document.head.appendChild(style);
-
-// Initialize page
-document.addEventListener('DOMContentLoaded', () => {
-    // Add loading animation to placeholder items
-    const placeholderItems = document.querySelectorAll('.placeholder-item');
-    placeholderItems.forEach((item, index) => {
-        setTimeout(() => {
-            item.style.transform = 'scale(1.05)';
-            setTimeout(() => {
-                item.style.transform = 'scale(1)';
-            }, 200);
-        }, index * 100);
-    });
-});
-
-// Performance optimization: debounce scroll events
+// Utility functions
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -258,40 +500,29 @@ function debounce(func, wait) {
     };
 }
 
-// Use debounced scroll for better performance
-window.addEventListener('scroll', debounce(() => {
-    // Any additional scroll-based animations can go here
-}, 16));
+// Optimized scroll handler
+const optimizedScrollHandler = debounce(function() {
+    // Any scroll-dependent functions can be placed here
+}, 16); // ~60fps
 
-// Add keyboard navigation for accessibility
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        // Close mobile menu if open
-        if (navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-            mobileMenuToggle.textContent = '☰';
+window.addEventListener('scroll', optimizedScrollHandler);
+
+// Handle external links
+document.addEventListener('click', function(e) {
+    if (e.target.matches('a[href^="http"]') || e.target.closest('a[href^="http"]')) {
+        const link = e.target.matches('a') ? e.target : e.target.closest('a');
+        if (link.hostname !== window.location.hostname) {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
         }
-        
-        // Close any open FAQ items
-        faqItems.forEach(item => {
-            item.classList.remove('active');
-            item.querySelector('.faq-answer').style.display = 'none';
-        });
     }
 });
 
-// Analytics tracking (placeholder for future implementation)
-function trackEvent(eventName, eventData = {}) {
-    // Google Analytics or other tracking implementation
-    console.log('Event tracked:', eventName, eventData);
+// SEO and Analytics placeholder
+function initializeAnalytics() {
+    // Google Analytics or other analytics code would go here
+    console.log('Analytics initialized');
 }
 
-// Track user interactions
-document.querySelectorAll('button, .nav-link').forEach(element => {
-    element.addEventListener('click', (e) => {
-        trackEvent('click', {
-            element: e.target.textContent.trim(),
-            location: window.location.pathname
-        });
-    });
-});
+// Call analytics initialization
+initializeAnalytics();
