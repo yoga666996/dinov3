@@ -1,208 +1,182 @@
-# Nano Banana AI - Revolutionary Banana Image Editor
+# DINOv3 Official Website
 
-🍌 **Nano Banana AI** is a revolutionary banana image editing platform that transforms banana pictures using advanced AI technology. NanoBanana delivers superior banana image processing with natural language commands, specifically designed for professional banana picture enhancement.
+This repository contains the official website for DINOv3, a state-of-the-art computer vision model trained with self-supervised learning.
 
-## 🌟 Key Features
+## 🌟 Features
 
-- **Intelligent Banana Recognition**: Advanced AI specifically designed for banana image processing and banana picture enhancement
-- **Precision Banana Editing**: Maintain perfect banana image quality with nanobanana technology
-- **Lightning-Fast Processing**: Generate enhanced banana images in milliseconds with nano banana speed
-- **Professional Results**: Perfect for commercial banana picture projects and marketing campaigns
-- **User-Friendly Interface**: Simple text commands for complex banana image transformations
+- **Modern Responsive Design**: Built with modern web standards and optimized for all devices
+- **SEO Optimized**: Complete meta tags, structured data, and search engine optimization
+- **Interactive UI**: Smooth animations, scroll effects, and engaging user experience
+- **Performance Focused**: Optimized loading, lazy loading, and efficient resource management
+- **YouTube Integration**: Embedded research video showcase
+- **PWA Ready**: Progressive Web App capabilities with manifest and service worker support
 
 ## 🚀 Quick Start
 
-### Local Development
+1. Clone the repository:
+```bash
+git clone https://github.com/your-org/dinov3-website.git
+cd dinov3-website
+```
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/nanobanana/banana-image-editor.git
-   cd nanobanana-ai-website
-   ```
+2. Open `index.html` in your browser or serve with a local server:
+```bash
+# Using Python
+python -m http.server 8000
 
-2. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+# Using Node.js
+npx serve .
 
-3. **Start Development Server**
-   ```bash
-   npm run dev
-   # or
-   npm start
-   ```
+# Using PHP
+php -S localhost:8000
+```
 
-4. **Open Browser**
-   Visit `http://localhost:3000` to start editing banana images
+3. Visit `http://localhost:8000` to view the website
 
-### Direct Usage
-
-Simply open `index.html` in your browser to access the NanoBanana banana image editor interface.
-
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
-nanobanana-ai-website/
-├── index.html          # 主页面
-├── styles.css          # 样式文件
-├── script.js           # JavaScript功能
-├── package.json        # 项目配置
-├── README.md          # 项目说明
-└── images/            # 图片资源 (需要自行添加)
+dinov3-website/
+├── index.html          # Main HTML file
+├── styles.css          # CSS styles and responsive design
+├── script.js           # JavaScript interactions and animations
+├── manifest.json       # PWA manifest file
+├── robots.txt          # Search engine crawler instructions
+├── sitemap.xml         # Site structure for search engines
+├── README.md           # Project documentation
+└── icons/              # Website icons and favicons (to be added)
     ├── favicon.ico
-    ├── og-image.jpg
-    └── twitter-image.jpg
+    ├── apple-touch-icon.png
+    └── favicon-32x32.png
 ```
 
-## 🎨 设计特色
+## 🎨 Design System
 
-- **黑色主题**: 现代化的暗色设计，突出AI科技感
-- **响应式设计**: 完美适配桌面、平板和移动设备
-- **流畅动画**: 丰富的交互动画和滚动效果
-- **SEO优化**: 完整的meta标签和结构化数据
-- **性能优化**: 轻量级代码，快速加载
+### Colors
+- **Primary**: `#ff6b35` (Orange gradient)
+- **Secondary**: `#f7931e` 
+- **Background**: `#0a0a0a` (Dark)
+- **Text**: `#ffffff` (White) / `#b3b3b3` (Light Gray)
 
-## 🔧 可用脚本
+### Typography
+- **Font Family**: Inter (Google Fonts)
+- **Weights**: 300, 400, 500, 600, 700
 
-- `npm start` - 启动HTTP服务器 (端口 3000)
-- `npm run dev` - 启动开发服务器，支持热重载
-- `npm run lint:html` - HTML代码检查
-- `npm run lint:css` - CSS代码检查  
-- `npm run lint:js` - JavaScript代码检查
-- `npm run optimize` - 图片优化
+### Components
+- Responsive navigation
+- Hero section with video
+- Feature cards
+- Performance statistics
+- Application showcases
+- Evolution timeline
+- Resource links
 
-## 📱 功能模块
+## 🔧 Customization
 
-### 导航栏
-- 响应式导航菜单
-- 移动端汉堡菜单
-- 平滑滚动导航
+### Adding New Sections
+1. Add HTML structure in `index.html`
+2. Style with CSS in `styles.css`
+3. Add interactions in `script.js` if needed
 
-### 英雄区域
-- 渐变文字效果
-- 动态背景
-- CTA按钮交互
+### Updating Content
+- Modify text content directly in `index.html`
+- Update meta tags for SEO
+- Add new resource links and references
 
-### AI编辑器界面
-- 文件上传模拟
-- 标签页切换
-- 实时处理效果
+### Styling Changes
+- Colors: Update CSS custom properties
+- Layout: Modify grid and flexbox properties
+- Animations: Adjust transition and transform properties
 
-### 功能展示
-- 三大核心功能卡片
-- 悬停动画效果
-- 滚动触发动画
+## 📱 Browser Support
 
-### 作品展示
-- 速度标签展示
-- 示例图片展示
-- 详细描述
-
-### 用户评价
-- 三位用户证言
-- 个性化头像
-- 真实评价内容
-
-### FAQ部分
-- 手风琴式展开
-- 6个核心问题
-- 键盘导航支持
-
-## 🌍 SEO优化
-
-### Meta标签
-- 完整的title和description
-- Open Graph标签 (Facebook)
-- Twitter Card标签
-- 规范链接标签
-
-### 关键词优化
-主要关键词：
-- nano banana
-- nano-banana  
-- nanobanana
-- banana image
-- banana picture
-- AI图像编辑
-- AI图片生成
-
-### 结构化数据
-- Schema.org WebApplication标记
-- JSON-LD格式
-- 搜索引擎友好的结构
-
-## 🎯 目标受众
-
-- **AI艺术创作者**: 寻找高质量图像编辑工具
-- **内容创作者**: 需要快速生成UGC内容
-- **营销人员**: 制作社交媒体和广告素材
-- **设计师**: 需要AI辅助的专业工具
-- **个人用户**: 想要体验AI图像编辑
-
-## 🚀 部署指南
-
-### 静态网站托管
-
-推荐平台：
-- **Netlify**: 拖拽部署，自动HTTPS
-- **Vercel**: Git集成，全球CDN
-- **GitHub Pages**: 免费托管，版本控制
-- **Cloudflare Pages**: 快速CDN，域名管理
-
-### 部署步骤 (以Netlify为例)
-
-1. 注册Netlify账户
-2. 连接GitHub仓库
-3. 设置构建命令: `npm run build`
-4. 设置发布目录: `.` (根目录)
- 5. 配置自定义域名: `nanobananaai.pro`
-
-## 📊 性能优化
-
-- **CSS优化**: 使用现代CSS特性，减少重绘
-- **JavaScript优化**: 防抖滚动事件，懒加载图片
-- **图片优化**: 建议使用WebP格式，响应式图片
-- **字体优化**: Google Fonts预连接，字体显示优化
-
-## 🔍 浏览器兼容性
-
-支持所有现代浏览器：
 - Chrome 60+
-- Firefox 60+
+- Firefox 55+
 - Safari 12+
 - Edge 79+
+- Mobile browsers (iOS Safari, Chrome Mobile)
 
-## 📞 联系信息
+## ⚡ Performance Optimizations
 
- - **网站**: https://nanobananaai.pro
- - **邮箱**: contact@nanobananaai.pro
-- **GitHub**: https://github.com/nanobanana/website
+- **CSS**: Minified and optimized
+- **Images**: Lazy loading and optimized formats
+- **JavaScript**: Debounced scroll handlers and efficient DOM manipulation
+- **Fonts**: Preloaded and display optimized
+- **Video**: Lazy loading with intersection observer
 
-## 📄 许可证
+## 🔍 SEO Features
 
-本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
+- Complete meta tags (title, description, keywords)
+- Open Graph tags for social media sharing
+- Twitter Card meta tags
+- Structured data (Schema.org JSON-LD)
+- XML sitemap
+- Robots.txt
+- Canonical URLs
 
-## 🤝 贡献指南
+## 📊 Analytics Integration
 
-欢迎提交问题和拉取请求！
+The website is ready for analytics integration:
+- Google Analytics placeholder in `script.js`
+- Performance monitoring setup
+- User interaction tracking capabilities
 
-1. Fork项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开拉取请求
+## 🚀 Deployment
 
-## 📝 更新日志
+### GitHub Pages
+1. Push to GitHub repository
+2. Enable GitHub Pages in repository settings
+3. Select source branch (main)
 
-### v1.0.0 (2025-08-15)
-- 🎉 Initial Release
-- ✨ Complete banana image editing website
-- 🎨 Dark theme design optimized for banana images
-- 📱 Responsive layout for all devices
-- 🔍 Advanced SEO optimization with banana-specific keywords
-- 📊 Google Analytics integration
-- 🍌 Specialized banana picture processing features
+### Netlify
+1. Connect GitHub repository
+2. Build settings: None (static site)
+3. Publish directory: `/` (root)
+
+### Vercel
+1. Import GitHub repository
+2. Framework preset: Other
+3. Deploy
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test responsiveness and functionality
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Related Links
+
+- [DINOv3 ArXiv Paper](https://arxiv.org/abs/2304.07193)
+- [DINOv3 on Hugging Face](https://huggingface.co/facebook/dinov3)
+- [Meta AI Research](https://ai.meta.com/)
+- [Original Research Video](https://www.youtube.com/watch?v=-eOYWK6m3i8)
+
+## 📞 Support
+
+For questions about the website, please open an issue in this repository.
+For questions about DINOv3 research, please refer to the official research channels.
+
+## 📊 SEO Optimization (Updated: 2025-08-15)
+
+### Key Performance Indicators:
+- **Target Keywords**: DINOv3, computer vision, self-supervised learning, SSL, Meta AI
+- **Keyword Density**: Optimized for 2-3% density across primary keywords
+- **Page Load Speed**: < 3 seconds target with optimized assets
+- **Mobile Responsiveness**: 100% responsive design with mobile-first approach
+- **Structured Data**: Schema.org markup for enhanced search results
+
+### Recent Updates:
+- Enhanced title and meta description keyword density
+- Updated all timestamps to 2025-08-15
+- Improved semantic markup for better search engine understanding
+- Added comprehensive FAQ section with structured data
 
 ---
 
-**Nano Banana AI** - 体验AI图像编辑的未来 🍌✨
+Built with ❤️ for the computer vision community | Last Updated: August 15, 2025
