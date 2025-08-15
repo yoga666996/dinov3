@@ -1,0 +1,69 @@
+{
+    "name": "NanoBanana AI - Nano Banana Image Editor",
+    "short_name": "NanoBanana",
+    "description": "Revolutionary nano banana image editor for professional banana picture enhancement",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#f59e0b",
+    "background_color": "#0a0a0a",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "start_url": "/",
+    "scope": "/",
+    "lang": "en",
+    "categories": ["photo", "productivity", "utilities"],
+    "screenshots": [
+        {
+            "src": "/screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "NanoBanana desktop interface for banana image editing"
+        },
+        {
+            "src": "/screenshot-mobile.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "NanoBanana mobile interface for banana picture processing"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Banana Image Editor",
+            "short_name": "Editor",
+            "description": "Open the nano banana image editor",
+            "url": "/#banana-editor",
+            "icons": [
+                {
+                    "src": "/shortcut-editor.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Banana Picture Gallery",
+            "short_name": "Gallery",
+            "description": "View banana picture examples",
+            "url": "/#picture-gallery",
+            "icons": [
+                {
+                    "src": "/shortcut-gallery.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
+}

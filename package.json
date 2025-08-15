@@ -1,0 +1,62 @@
+{
+  "name": "nanobanana-ai-website",
+  "version": "1.0.0",
+  "description": "NanoBanana AI - Revolutionary Banana Image Editor Website (Updated: 2025-08-15)",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "dev": "npx live-server --port=3000 --open=/",
+    "build": "echo 'Static site - no build process needed'",
+    "deploy": "echo 'Deploy to your hosting platform'",
+    "test": "echo 'No tests specified'",
+    "lint:html": "npx htmlhint *.html",
+    "lint:css": "npx stylelint *.css",
+    "lint:js": "npx eslint *.js",
+    "optimize": "npx imagemin images/* --out-dir=images/optimized"
+  },
+  "keywords": [
+    "nano banana",
+    "nano-banana", 
+    "nanobanana",
+    "banana image",
+    "banana picture",
+    "AI图像编辑",
+    "AI图片生成",
+    "文本转图像",
+    "AI编辑器",
+    "图像AI",
+    "nano banana ai",
+    "gemini 3",
+    "flux kontext",
+    "LMArena",
+    "AI影响者",
+    "UGC内容"
+  ],
+  "author": "Nano Banana AI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nanobanana/website.git"
+  },
+  "homepage": "https://nanobananaai.org",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2",
+    "htmlhint": "^1.1.4",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0",
+    "eslint": "^8.52.0",
+    "imagemin": "^8.0.1",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-mozjpeg": "^10.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

@@ -1,0 +1,87 @@
+# Nano Banana AI 网站优化配置
+
+# 启用压缩
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# 设置缓存策略
+<IfModule mod_expires.c>
+    ExpiresActive on
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType text/html "access plus 1 day"
+</IfModule>
+
+# 设置安全头
+<IfModule mod_headers.c>
+    # HTTPS强制
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    
+    # 防止点击劫持
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # 防止MIME类型嗅探
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # XSS保护
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # 推荐安全策略
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# URL重写规则
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # 强制HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # 删除 .html 扩展名
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^\.]+)$ $1.html [NC,L]
+    
+    # 重定向到 nanobananaai.pro
+    RewriteCond %{HTTP_HOST} !^nanobananaai\.pro$ [NC]
+    RewriteRule ^(.*)$ https://nanobananaai.pro/$1 [L,R=301]
+</IfModule>
+
+# 错误页面
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# 禁止访问敏感文件
+<Files ".htaccess">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "*.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# 字符集设置
+AddDefaultCharset UTF-8
+
+# MIME类型设置
+AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType application/javascript .mjs

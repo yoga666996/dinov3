@@ -1,0 +1,207 @@
+/* Advanced Animations for NanoBanana */
+
+/* Floating Banana Animation */
+@keyframes floatingBanana {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(2deg); }
+    50% { transform: translateY(-5px) rotate(0deg); }
+    75% { transform: translateY(-15px) rotate(-2deg); }
+}
+
+.logo {
+    animation: floatingBanana 4s ease-in-out infinite;
+}
+
+/* Gradient Text Animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.brand-text, .hero-title {
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+/* Pulse Effect for Call-to-Action Buttons */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+.btn-primary {
+    animation: pulse 2s infinite;
+}
+
+.btn-primary:hover {
+    animation: none;
+}
+
+/* Banana Image Placeholder Shimmer */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.image-placeholder {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-placeholder::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Speed Badge Glow */
+@keyframes speedGlow {
+    0%, 100% { box-shadow: 0 0 5px rgba(245, 158, 11, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.8), 0 0 30px rgba(245, 158, 11, 0.4); }
+}
+
+.speed-badge {
+    animation: speedGlow 2s ease-in-out infinite;
+}
+
+/* Card Hover Effects */
+.feature-card, .review-card, .showcase-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.showcase-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Staggered Animation for Grid Items */
+.features-grid .feature-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.features-grid .feature-card:nth-child(1) { animation-delay: 0.1s; }
+.features-grid .feature-card:nth-child(2) { animation-delay: 0.2s; }
+.features-grid .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Smooth scroll behavior enhancement */
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Loading animation for placeholder grid */
+@keyframes placeholderPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.placeholder-item {
+    animation: placeholderPulse 1.5s ease-in-out infinite;
+}
+
+.placeholder-item:nth-child(1) { animation-delay: 0s; }
+.placeholder-item:nth-child(2) { animation-delay: 0.3s; }
+.placeholder-item:nth-child(3) { animation-delay: 0.6s; }
+.placeholder-item:nth-child(4) { animation-delay: 0.9s; }
+
+/* Nano Banana text highlight effect */
+@keyframes highlightBanana {
+    0% { background-size: 0 100%; }
+    100% { background-size: 100% 100%; }
+}
+
+.banana-highlight {
+    background: linear-gradient(120deg, rgba(245, 158, 11, 0.3) 0%, rgba(245, 158, 11, 0.3) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 0;
+    background-position: 0 100%;
+    transition: background-size 0.3s ease;
+}
+
+.banana-highlight:hover {
+    background-size: 100% 100%;
+}
+
+/* FAQ accordion smooth expansion */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in, padding 0.3s ease-in;
+}
+
+/* Mobile-specific animations */
+@media (max-width: 768px) {
+    .feature-card:hover {
+        transform: none;
+    }
+    
+    .btn-primary {
+        animation: none;
+    }
+    
+    .logo {
+        animation-duration: 6s;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .image-placeholder::after {
+        display: none;
+    }
+    
+    .speed-badge {
+        animation: none;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
