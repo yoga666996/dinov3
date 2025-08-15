@@ -1,22 +1,27 @@
 User-agent: *
 Allow: /
 
-# 站点地图
-Sitemap: https://nanobananaai.pro/sitemap.xml
+# Sitemaps
+Sitemap: https://dinov3.org/sitemap.xml
 
-# 禁止访问的目录（如果有的话）
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Allow all search engines to index
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Block access to admin areas (if any)
+# User-agent: *
 # Disallow: /admin/
 # Disallow: /private/
 
-# 允许搜索引擎索引所有内容
-Allow: /*.css
-Allow: /*.js
-Allow: /*.png
-Allow: /*.jpg
-Allow: /*.jpeg
-Allow: /*.gif
-Allow: /*.svg
-Allow: /*.webp
-
-# 爬取延迟（可选）
-Crawl-delay: 1
+# Allow access to CSS and JS files
+Allow: /*.css$
+Allow: /*.js$
