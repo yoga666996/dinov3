@@ -357,51 +357,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const loadingOverlay = document.querySelector('#video-loading');
         const playOverlay = document.querySelector('#video-play-overlay');
         
-        if (!video) {
-            console.error('Video element not found');
-            return;
-        }
-        
-        console.log('Initializing video player...');
-        console.log('Video src:', video.querySelector('source')?.src);
+        if (!video) return;
         
         // Show loading initially
         if (loadingOverlay) {
             loadingOverlay.style.display = 'flex';
-            loadingOverlay.classList.remove('hidden');
         }
         if (playOverlay) {
             playOverlay.style.display = 'none';
-            playOverlay.classList.add('hidden');
-        }
-        
-        // Check if video file exists
-        const videoSource = video.querySelector('source');
-        if (videoSource) {
-            const videoUrl = videoSource.src;
-            console.log('Checking video URL:', videoUrl);
-            
-            // Try to load video with timeout
-            const loadTimeout = setTimeout(() => {
-                console.warn('Video loading timeout - showing play overlay anyway');
-                hideLoading();
-                showPlayOverlay();
-            }, 5000); // 5 second timeout (reduced from 10)
-            
-            // Also show play overlay after a short delay even if video isn't fully loaded
-            const quickShowTimeout = setTimeout(() => {
-                if (video.readyState >= 1) { // HAVE_METADATA
-                    console.log('Video metadata available, showing play overlay');
-                    hideLoading();
-                    showPlayOverlay();
-                    clearTimeout(loadTimeout);
-                }
-            }, 2000); // Show after 2 seconds if metadata is loaded
-            
-            video.addEventListener('loadeddata', () => {
-                console.log('Video data loaded successfully');
-                clearTimeout(loadTimeout);
-            });
         }
         
         // Video event listeners
@@ -412,12 +375,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         video.addEventListener('loadedmetadata', function() {
             console.log('Video metadata loaded');
-            console.log('Video duration:', video.duration);
-            console.log('Video dimensions:', video.videoWidth, 'x', video.videoHeight);
-        });
-        
-        video.addEventListener('loadeddata', function() {
-            console.log('Video first frame loaded');
         });
         
         video.addEventListener('canplay', function() {
@@ -427,21 +384,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         video.addEventListener('canplaythrough', function() {
-            console.log('Video fully loaded and can play through');
+            console.log('Video fully loaded');
             hideLoading();
             showPlayOverlay();
-        });
-        
-        // Add a progress event listener
-        video.addEventListener('progress', function() {
-            if (video.buffered.length > 0) {
-                const bufferedEnd = video.buffered.end(video.buffered.length - 1);
-                const duration = video.duration;
-                if (duration > 0) {
-                    const bufferPercent = (bufferedEnd / duration) * 100;
-                    console.log('Video buffered:', bufferPercent.toFixed(1) + '%');
-                }
-            }
         });
         
         video.addEventListener('play', function() {
@@ -483,30 +428,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         video.addEventListener('error', function(e) {
             console.error('Video error:', e);
-            console.error('Video error details:', {
-                error: e.target.error,
-                networkState: video.networkState,
-                readyState: video.readyState
-            });
-            
             hideLoading();
             hidePlayOverlay();
             
-            // Show error message with retry option
+            // Show error message
             const container = video.parentElement;
-            if (container && !container.querySelector('.video-error')) {
+            if (container) {
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'video-error';
-                errorDiv.innerHTML = `
-                    <div style="text-align: center; color: white; padding: 2rem;">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem; color: #ff6b35;"></i>
-                        <h3>Video Temporarily Unavailable</h3>
-                        <p>Video file may be processing, please try again later</p>
-                        <button onclick="retryVideoLoad()" class="btn btn-primary" style="margin-top: 1rem;">
-                            <i class="fas fa-redo"></i> Retry Loading
-                        </button>
-                    </div>
-                `;
+                errorDiv.innerHTML = '<p>视频加载失败，请检查网络连接或刷新页面重试。</p>';
                 container.appendChild(errorDiv);
             }
         });
@@ -549,96 +479,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Global function for playing video with optimized loading
+    // Global function for playing video
     window.playVideoNow = function() {
         const video = document.querySelector('#hero-video');
-        const loadingOverlay = document.querySelector('#video-loading');
-        
         if (video) {
-            // Show loading indicator
-            if (loadingOverlay) {
-                loadingOverlay.style.display = 'flex';
-                loadingOverlay.classList.remove('hidden');
-            }
-            
-            // Only load video when user actually wants to play it
-            if (video.readyState === 0) {
-                console.log('Loading video on demand...');
-                video.load();
-                
-                // Wait for enough data to start playing
-                video.addEventListener('canplay', function() {
-                    console.log('Video ready to play');
-                    if (loadingOverlay) {
-                        loadingOverlay.classList.add('hidden');
-                        setTimeout(() => {
-                            loadingOverlay.style.display = 'none';
-                        }, 300);
-                    }
-                    
-                    video.muted = false; // Unmute when user clicks
-                    video.play().catch(function(error) {
-                        console.error('Play failed:', error);
-                        video.controls = true;
-                    });
-                }, { once: true });
-            } else {
-                // Video already loaded
-                if (loadingOverlay) {
-                    loadingOverlay.style.display = 'none';
-                }
-                video.muted = false;
-                video.play().catch(function(error) {
-                    console.error('Play failed:', error);
-                    video.controls = true;
-                });
-            }
-        }
-    };
-    
-    // Global function for retrying video load
-    window.retryVideoLoad = function() {
-        const video = document.querySelector('#hero-video');
-        const loadingOverlay = document.querySelector('#video-loading');
-        const errorDiv = document.querySelector('.video-error');
-        
-        if (errorDiv) {
-            errorDiv.remove();
-        }
-        
-        if (loadingOverlay) {
-            loadingOverlay.style.display = 'flex';
-            loadingOverlay.classList.remove('hidden');
-        }
-        
-        if (video) {
-            console.log('Retrying video load...');
-            video.load(); // Reload the video
+            video.muted = false; // Unmute when user clicks
+            video.play().catch(function(error) {
+                console.error('Play failed:', error);
+                // Fallback: show browser's native play controls
+                video.controls = true;
+            });
         }
     };
     
     // Initialize local video when DOM is ready
     initializeLocalVideo();
-    
-    // Fallback: If nothing happens after 3 seconds, show play overlay
-    setTimeout(() => {
-        const loadingOverlay = document.querySelector('#video-loading');
-        const playOverlay = document.querySelector('#video-play-overlay');
-        
-        if (loadingOverlay && loadingOverlay.style.display !== 'none') {
-            console.log('Fallback: Showing play overlay after delay');
-            if (loadingOverlay) {
-                loadingOverlay.classList.add('hidden');
-                setTimeout(() => {
-                    loadingOverlay.style.display = 'none';
-                }, 300);
-            }
-            if (playOverlay) {
-                playOverlay.style.display = 'flex';
-                playOverlay.classList.remove('hidden');
-            }
-        }
-    }, 3000); // 3 second fallback
 
     // Enhanced video visibility tracking
     function setupVideoIntersectionObserver() {
@@ -667,14 +522,50 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setupVideoIntersectionObserver();
 
-    // Dark mode functionality removed to reduce bundle size
+    // Dark mode toggle (optional feature)
+    function createDarkModeToggle() {
+        const toggle = document.createElement('button');
+        toggle.innerHTML = '<i class="fas fa-moon"></i>';
+        toggle.className = 'dark-mode-toggle';
+        toggle.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        `;
+        
+        // Since the site is already dark, this would toggle to light mode
+        toggle.addEventListener('click', function() {
+            document.body.classList.toggle('light-mode');
+            toggle.innerHTML = document.body.classList.contains('light-mode') 
+                ? '<i class="fas fa-sun"></i>' 
+                : '<i class="fas fa-moon"></i>';
+        });
+        
+        document.body.appendChild(toggle);
+    }
+    
+    // Uncomment if you want dark mode toggle
+    // createDarkModeToggle();
 
-    // Form validation - Only initialize if forms exist
-    const forms = document.querySelectorAll('form');
-    if (forms.length > 0) {
+    // Form validation (if contact form is added)
+    function setupFormValidation() {
+        const forms = document.querySelectorAll('form');
+        
         forms.forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
+                
                 const inputs = form.querySelectorAll('input[required], textarea[required]');
                 let isValid = true;
                 
@@ -688,11 +579,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 if (isValid) {
+                    // Handle form submission
                     console.log('Form submitted successfully');
+                    // You can add actual form submission logic here
                 }
             });
         });
     }
+    
+    setupFormValidation();
 
     // Performance monitoring
     function trackPerformance() {
