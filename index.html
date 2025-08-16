@@ -165,6 +165,10 @@
     }
     </script>
 
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8126269008200876"
+         crossorigin="anonymous"></script>
+    
     <!-- Google Analytics (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0SZ20PQ9F"></script>
     <script>
@@ -252,23 +256,47 @@
                     <span>New AI Research Video</span>
                 </div>
                 <div class="video-container">
-                    <div class="video-overlay">
-                        <div class="play-button" onclick="playVideo()">
+                    <div class="video-overlay" id="video-overlay">
+                        <div class="play-button" onclick="loadVideo()">
                             <i class="fas fa-play"></i>
                         </div>
                         <div class="video-info">
                             <h4>DINOv3: Revolutionary Computer Vision</h4>
                             <p>Watch the complete research demonstration</p>
                         </div>
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/-eOYWK6m3i8/maxresdefault.jpg" 
+                                 alt="DINOv3 Research Video Thumbnail" 
+                                 loading="lazy">
+                        </div>
                     </div>
-                    <iframe 
-                        id="hero-video"
-                        src="https://www.youtube.com/embed/-eOYWK6m3i8?enablejsapi=1&rel=0&modestbranding=1" 
-                        title="DINOv3 Research Video - Self-Supervised Computer Vision"
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                    </iframe>
+                    <div id="video-frame-container" style="display: none;">
+                        <iframe 
+                            id="hero-video"
+                            src="" 
+                            title="DINOv3 Research Video - Self-Supervised Computer Vision"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin">
+                        </iframe>
+                    </div>
+                    <!-- 备用播放选项 -->
+                    <div class="video-fallback">
+                        <div class="fallback-options">
+                            <a href="https://www.youtube.com/watch?v=-eOYWK6m3i8" 
+                               target="_blank" 
+                               class="fallback-link">
+                                <i class="fab fa-youtube"></i>
+                                在YouTube上观看
+                            </a>
+                            <button onclick="loadVideoDirectly()" class="fallback-button">
+                                <i class="fas fa-video"></i>
+                                直接加载视频
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="video-stats">
                     <div class="stats-grid">
