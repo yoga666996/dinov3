@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     if (typeof gtag !== 'undefined') {
                                         gtag('event', 'video_play', {
                                             'video_title': 'DINOv3 Research Video',
-                                            'video_url': 'https://www.youtube.com/watch?v=-eOYWK6m3i8'
+                                            'video_url': './6nQHtKwo-2U77si_.mp4'
                                         });
                                     }
                                 }
@@ -351,29 +351,149 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initializeVideoFeatures();
 
-    // Global function for play button
-    window.playVideo = function() {
-        const iframe = document.querySelector('#hero-video');
-        const videoOverlay = document.querySelector('.video-overlay');
+    // Setup local video player with optimized loading
+    function initializeLocalVideo() {
+        const video = document.querySelector('#hero-video');
+        const loadingOverlay = document.querySelector('#video-loading');
+        const playOverlay = document.querySelector('#video-play-overlay');
         
-        if (iframe && iframe.contentWindow) {
-            // Send play command to YouTube iframe
-            iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        if (!video) return;
+        
+        // Show loading initially
+        if (loadingOverlay) {
+            loadingOverlay.style.display = 'flex';
+        }
+        if (playOverlay) {
+            playOverlay.style.display = 'none';
+        }
+        
+        // Video event listeners
+        video.addEventListener('loadstart', function() {
+            console.log('Video loading started');
+            showLoading();
+        });
+        
+        video.addEventListener('loadedmetadata', function() {
+            console.log('Video metadata loaded');
+        });
+        
+        video.addEventListener('canplay', function() {
+            console.log('Video can start playing');
+            hideLoading();
+            showPlayOverlay();
+        });
+        
+        video.addEventListener('canplaythrough', function() {
+            console.log('Video fully loaded');
+            hideLoading();
+            showPlayOverlay();
+        });
+        
+        video.addEventListener('play', function() {
+            hidePlayOverlay();
+            showVideoControls();
             
-            // Hide overlay
-            if (videoOverlay) {
-                videoOverlay.style.opacity = '0';
-            }
-            
-            // Track manual play button click
+            // Track video play
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'play_button_click', {
+                gtag('event', 'video_play', {
                     'video_title': 'DINOv3 Research Video',
-                    'interaction_type': 'manual_play'
+                    'video_type': 'local_mp4'
                 });
             }
+        });
+        
+        video.addEventListener('pause', function() {
+            // Track video pause
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'video_pause', {
+                    'video_title': 'DINOv3 Research Video'
+                });
+            }
+        });
+        
+        video.addEventListener('ended', function() {
+            showPlayOverlay();
+            
+            // Track video completion
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'video_complete', {
+                    'video_title': 'DINOv3 Research Video'
+                });
+            }
+        });
+        
+        video.addEventListener('waiting', function() {
+            console.log('Video buffering...');
+        });
+        
+        video.addEventListener('error', function(e) {
+            console.error('Video error:', e);
+            hideLoading();
+            hidePlayOverlay();
+            
+            // Show error message
+            const container = video.parentElement;
+            if (container) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'video-error';
+                errorDiv.innerHTML = '<p>视频加载失败，请检查网络连接或刷新页面重试。</p>';
+                container.appendChild(errorDiv);
+            }
+        });
+        
+        // Helper functions
+        function showLoading() {
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.classList.remove('hidden');
+            }
+        }
+        
+        function hideLoading() {
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('hidden');
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 300);
+            }
+        }
+        
+        function showPlayOverlay() {
+            if (playOverlay) {
+                playOverlay.style.display = 'flex';
+                playOverlay.classList.remove('hidden');
+            }
+        }
+        
+        function hidePlayOverlay() {
+            if (playOverlay) {
+                playOverlay.classList.add('hidden');
+                setTimeout(() => {
+                    playOverlay.style.display = 'none';
+                }, 300);
+            }
+        }
+        
+        function showVideoControls() {
+            video.controls = true;
+        }
+    }
+    
+    // Global function for playing video
+    window.playVideoNow = function() {
+        const video = document.querySelector('#hero-video');
+        if (video) {
+            video.muted = false; // Unmute when user clicks
+            video.play().catch(function(error) {
+                console.error('Play failed:', error);
+                // Fallback: show browser's native play controls
+                video.controls = true;
+            });
         }
     };
+    
+    // Initialize local video when DOM is ready
+    initializeLocalVideo();
 
     // Enhanced video visibility tracking
     function setupVideoIntersectionObserver() {
