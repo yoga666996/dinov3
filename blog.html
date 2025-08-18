@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta DINOv3 Research Blog | Latest Computer Vision Insights by Meta AI</title>
+    <meta name="description" content="Meta DINOv3 research blog featuring the latest insights, technical articles, and breakthroughs in self-supervised learning. Explore how Meta DINO v3 is advancing computer vision research and real-world applications.">
+    
+    <!-- Critical Resource Preloading -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Non-critical CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></noscript>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Research Blog - DINOv3 Computer Vision Model">
+    <meta property="og:description" content="Latest research insights and technical articles about DINOv3 computer vision model and self-supervised learning.">
+    <meta property="og:image" content="https://dinov3.org/images/dinov3-preview.jpg">
+    <meta property="og:url" content="https://dinov3.org/blog">
+    <meta property="og:type" content="website">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Meta AI Research">
+    <link rel="canonical" href="https://dinov3.org/blog">
+    <meta name="keywords" content="DINOv3 blog, computer vision research, self-supervised learning, AI research, Meta AI, vision transformer, machine learning">
+    
+    <!-- Blog-specific structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "DINOv3 Research Blog",
+        "description": "Latest insights and research updates about DINOv3 computer vision model and self-supervised learning",
+        "url": "https://dinov3.org/blog",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Meta AI Research",
+            "url": "https://ai.meta.com/"
+        },
+        "inLanguage": "en-US"
+    }
+    </script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0SZ20PQ9F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P0SZ20PQ9F');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="index.html">
+                        <i class="fas fa-eye brand-icon"></i>
+                        <span class="brand-text">DINOv3</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="help.html" class="nav-link">Help</a></li>
+                    <li><a href="index.html#resources" class="nav-link">Resources</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="index.html#download" class="btn btn-primary">Download</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="blog-page">
+        <div class="container">
+            <div class="blog-header">
+                <h1>DINOv3 Research Blog</h1>
+                <p>Latest insights, research updates, and technical articles about computer vision and self-supervised learning</p>
+            </div>
+
+            <div class="blog-content">
+                <div class="blog-grid">
+                    <!-- Featured Article -->
+                    <article class="blog-post featured" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="post-image">
+                            <img src="images/dinov3-video-thumbnail.jpg" alt="DINOv3 Self-Supervised Learning Architecture" itemprop="image">
+                            <div class="post-badge">Featured</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Research Paper</span>
+                                <span class="post-date" itemprop="datePublished" datetime="2023-04-14">April 14, 2023</span>
+                                <span class="post-author" itemprop="author">Meta AI Research Team</span>
+                            </div>
+                            <h2 itemprop="headline">DINOv3: Learning Robust Visual Features without Supervision</h2>
+                            <p itemprop="description">Introducing DINOv3, a new milestone in self-supervised learning for computer vision. Our method achieves state-of-the-art performance across multiple vision tasks with a single frozen backbone, trained on 1.7 billion images without human labels.</p>
+                            <div class="post-highlights">
+                                <div class="highlight-item">
+                                    <i class="fas fa-microchip"></i>
+                                    <span>7B Parameters</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fas fa-images"></i>
+                                    <span>1.7B Training Images</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>SOTA Performance</span>
+                                </div>
+                            </div>
+                            <a href="https://arxiv.org/abs/2304.07193" target="_blank" class="btn btn-primary" itemprop="url">Read Full Paper</a>
+                        </div>
+                    </article>
+
+                    <!-- Regular Blog Posts -->
+                    <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="post-image">
+                            <img src="images/dinov3-video-thumbnail.jpg" alt="Understanding Self-Supervised Learning" itemprop="image">
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Technical Deep Dive</span>
+                                <span class="post-date" itemprop="datePublished" datetime="2025-08-15">August 15, 2025</span>
+                            </div>
+                            <h3 itemprop="headline">Understanding Self-Supervised Learning in Computer Vision</h3>
+                            <p itemprop="description">Explore the fundamentals of self-supervised learning and how DINOv3 leverages this approach to learn powerful visual representations without requiring labeled data. Learn about the key innovations that make SSL effective at scale.</p>
+                            <div class="post-tags">
+                                <span class="tag">Self-Supervised Learning</span>
+                                <span class="tag">Computer Vision</span>
+                                <span class="tag">Deep Learning</span>
+                            </div>
+                            <a href="#" class="read-more" itemprop="url">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="post-image">
+                            <img src="images/dinov3-video-thumbnail.jpg" alt="DINOv3 Performance Benchmarks" itemprop="image">
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Performance Analysis</span>
+                                <span class="post-date" itemprop="datePublished" datetime="2025-08-12">August 12, 2025</span>
+                            </div>
+                            <h3 itemprop="headline">DINOv3 Performance Benchmarks: Setting New Standards</h3>
+                            <p itemprop="description">Comprehensive analysis of DINOv3's performance across object detection, semantic segmentation, and depth estimation tasks. See how our model achieves state-of-the-art results with zero fine-tuning.</p>
+                            <div class="post-tags">
+                                <span class="tag">Benchmarks</span>
+                                <span class="tag">Performance</span>
+                                <span class="tag">Evaluation</span>
+                            </div>
+                            <a href="#" class="read-more" itemprop="url">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="post-image">
+                            <img src="images/dinov3-video-thumbnail.jpg" alt="DINOv3 Implementation Guide" itemprop="image">
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Tutorial</span>
+                                <span class="post-date" itemprop="datePublished" datetime="2025-08-10">August 10, 2025</span>
+                            </div>
+                            <h3 itemprop="headline">Getting Started with DINOv3: Implementation Guide</h3>
+                            <p itemprop="description">Step-by-step tutorial on implementing DINOv3 in your computer vision projects. Learn how to load pre-trained models, extract features, and integrate DINOv3 into your machine learning pipeline.</p>
+                            <div class="post-tags">
+                                <span class="tag">Tutorial</span>
+                                <span class="tag">Implementation</span>
+                                <span class="tag">PyTorch</span>
+                            </div>
+                            <a href="#" class="read-more" itemprop="url">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="post-image">
+                            <img src="images/dinov3-video-thumbnail.jpg" alt="Real-world DINOv3 Applications" itemprop="image">
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Case Studies</span>
+                                <span class="post-date" itemprop="datePublished" datetime="2025-08-08">August 8, 2025</span>
+                            </div>
+                            <h3 itemprop="headline">Real-world Applications: DINOv3 in Action</h3>
+                            <p itemprop="description">Discover how organizations like NASA JPL, World Resources Institute, and Orakl Oncology are using DINOv3 for mission-critical applications in space exploration, environmental monitoring, and medical research.</p>
+                            <div class="post-tags">
+                                <span class="tag">Applications</span>
+                                <span class="tag">Case Studies</span>
+                                <span class="tag">Industry</span>
+                            </div>
+                            <a href="#" class="read-more" itemprop="url">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="post-image">
+                            <img src="images/dinov3-video-thumbnail.jpg" alt="Vision Transformer Architecture" itemprop="image">
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Architecture</span>
+                                <span class="post-date" itemprop="datePublished" datetime="2025-08-05">August 5, 2025</span>
+                            </div>
+                            <h3 itemprop="headline">Deep Dive: Vision Transformer Architecture in DINOv3</h3>
+                            <p itemprop="description">Technical exploration of the Vision Transformer architecture used in DINOv3. Understand the key components, attention mechanisms, and architectural innovations that enable superior visual feature learning.</p>
+                            <div class="post-tags">
+                                <span class="tag">Architecture</span>
+                                <span class="tag">Vision Transformer</span>
+                                <span class="tag">Technical</span>
+                            </div>
+                            <a href="#" class="read-more" itemprop="url">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="post-image">
+                            <img src="images/dinov3-video-thumbnail.jpg" alt="Future of Computer Vision" itemprop="image">
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Research Insights</span>
+                                <span class="post-date" itemprop="datePublished" datetime="2025-08-01">August 1, 2025</span>
+                            </div>
+                            <h3 itemprop="headline">The Future of Computer Vision: Beyond DINOv3</h3>
+                            <p itemprop="description">Explore emerging trends in computer vision research and how self-supervised learning is shaping the future of AI. Discover what comes next after DINOv3 and the challenges we're working to solve.</p>
+                            <div class="post-tags">
+                                <span class="tag">Future Research</span>
+                                <span class="tag">AI Trends</span>
+                                <span class="tag">Innovation</span>
+                            </div>
+                            <a href="#" class="read-more" itemprop="url">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="blog-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Categories</h3>
+                        <ul class="category-list">
+                            <li><a href="#" data-category="research">Research Papers <span>(3)</span></a></li>
+                            <li><a href="#" data-category="tutorials">Tutorials <span>(5)</span></a></li>
+                            <li><a href="#" data-category="case-studies">Case Studies <span>(4)</span></a></li>
+                            <li><a href="#" data-category="technical">Technical Deep Dives <span>(6)</span></a></li>
+                            <li><a href="#" data-category="news">Research News <span>(8)</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Featured Resources</h3>
+                        <div class="featured-resources">
+                            <div class="resource-item">
+                                <i class="fab fa-github"></i>
+                                <div>
+                                    <h4>GitHub Repository</h4>
+                                    <p>Access source code and implementations</p>
+                                    <a href="https://github.com/facebookresearch/dinov3" target="_blank">View Repository</a>
+                                </div>
+                            </div>
+                            <div class="resource-item">
+                                <i class="fas fa-file-alt"></i>
+                                <div>
+                                    <h4>ArXiv Paper</h4>
+                                    <p>Read the complete research paper</p>
+                                    <a href="https://arxiv.org/abs/2304.07193" target="_blank">Read Paper</a>
+                                </div>
+                            </div>
+                            <div class="resource-item">
+                                <i class="fas fa-robot"></i>
+                                <div>
+                                    <h4>Hugging Face Hub</h4>
+                                    <p>Pre-trained models and demos</p>
+                                    <a href="https://huggingface.co/facebook/dinov3" target="_blank">Explore Models</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Research Updates</h3>
+                        <div class="newsletter-signup">
+                            <p>Stay updated with the latest DINOv3 research and developments</p>
+                            <form class="newsletter-form">
+                                <input type="email" placeholder="Enter your email" required>
+                                <button type="submit" class="btn btn-primary">Subscribe</button>
+                            </form>
+                            <p class="newsletter-note">We respect your privacy. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Popular Tags</h3>
+                        <div class="tag-cloud">
+                            <span class="tag">Self-Supervised Learning</span>
+                            <span class="tag">Computer Vision</span>
+                            <span class="tag">Vision Transformer</span>
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">Object Detection</span>
+                            <span class="tag">Semantic Segmentation</span>
+                            <span class="tag">Foundation Models</span>
+                            <span class="tag">Meta AI</span>
+                            <span class="tag">Research</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="pagination-link active">1</a>
+                <a href="#" class="pagination-link">2</a>
+                <a href="#" class="pagination-link">3</a>
+                <span class="pagination-dots">...</span>
+                <a href="#" class="pagination-link">10</a>
+                <a href="#" class="pagination-link next">Next <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-eye brand-icon"></i>
+                        <span class="brand-text">DINOv3</span>
+                    </div>
+                    <p>State-of-the-art computer vision model trained with self-supervised learning.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://arxiv.org/abs/2304.07193" target="_blank">ArXiv Paper</a></li>
+                        <li><a href="https://github.com/facebookresearch/dinov3" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://huggingface.co/facebook/dinov3" target="_blank">Hugging Face Hub</a></li>
+                        <li><a href="blog.html">Research Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DINOv3 Computer Vision Model by Meta AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

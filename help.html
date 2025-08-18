@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta DINOv3 Help & Support | Computer Vision Model Documentation</title>
+    <meta name="description" content="Get comprehensive help with Meta DINOv3 computer vision model. Find documentation, tutorials, troubleshooting guides, and technical support for Meta DINO v3 implementation and deployment.">
+    
+    <!-- Critical Resource Preloading -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Non-critical CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></noscript>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Help & Support - DINOv3 Computer Vision Model">
+    <meta property="og:description" content="Comprehensive support resources for DINOv3 computer vision model including documentation, tutorials, and technical assistance.">
+    <meta property="og:image" content="https://dinov3.org/images/dinov3-preview.jpg">
+    <meta property="og:url" content="https://dinov3.org/help">
+    <meta property="og:type" content="website">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Meta AI Research">
+    <link rel="canonical" href="https://dinov3.org/help">
+    <meta name="keywords" content="DINOv3 help, computer vision support, AI model documentation, technical assistance, troubleshooting, tutorials">
+    
+    <!-- FAQ structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I install DINOv3?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "DINOv3 can be installed via pip install or by cloning the GitHub repository. Detailed installation instructions are available in our documentation."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What are the system requirements for DINOv3?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "DINOv3 requires Python 3.8+, PyTorch 1.12+, and CUDA-compatible GPU for optimal performance. CPU inference is also supported."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I use DINOv3 for my computer vision project?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Start with our quickstart guide which covers model loading, feature extraction, and integration examples for common computer vision tasks."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0SZ20PQ9F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P0SZ20PQ9F');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a href="index.html">
+                        <i class="fas fa-eye brand-icon"></i>
+                        <span class="brand-text">DINOv3</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="help.html" class="nav-link active">Help</a></li>
+                    <li><a href="index.html#resources" class="nav-link">Resources</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="index.html#download" class="btn btn-primary">Download</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="help-page">
+        <div class="container">
+            <div class="help-header">
+                <h1>Help & Support</h1>
+                <p>Find answers, documentation, and get the help you need to succeed with DINOv3</p>
+                
+                <!-- Search Bar -->
+                <div class="help-search">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search documentation, tutorials, and FAQ..." id="helpSearch">
+                        <button type="submit" class="search-btn">Search</button>
+                    </div>
+                    <div class="search-suggestions">
+                        <span>Popular searches:</span>
+                        <a href="#installation">Installation</a>
+                        <a href="#quickstart">Getting Started</a>
+                        <a href="#api">API Reference</a>
+                        <a href="#troubleshooting">Troubleshooting</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="help-content">
+                <!-- Quick Links -->
+                <section class="quick-links">
+                    <h2>Quick Start</h2>
+                    <div class="quick-links-grid">
+                        <div class="quick-link-card">
+                            <div class="card-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>Getting Started</h3>
+                            <p>New to DINOv3? Start here with our comprehensive quickstart guide</p>
+                            <a href="#quickstart" class="btn btn-outline">Get Started</a>
+                        </div>
+                        <div class="quick-link-card">
+                            <div class="card-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <h3>Installation Guide</h3>
+                            <p>Step-by-step instructions for installing DINOv3 on your system</p>
+                            <a href="#installation" class="btn btn-outline">Install Now</a>
+                        </div>
+                        <div class="quick-link-card">
+                            <div class="card-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>API Documentation</h3>
+                            <p>Complete API reference with examples and best practices</p>
+                            <a href="#api" class="btn btn-outline">View API</a>
+                        </div>
+                        <div class="quick-link-card">
+                            <div class="card-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h3>Tutorials</h3>
+                            <p>Hands-on tutorials for common computer vision tasks</p>
+                            <a href="#tutorials" class="btn btn-outline">Browse Tutorials</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQ Section -->
+                <section id="faq" class="faq-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-container">
+                        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span itemprop="name">How do I install DINOv3?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <div itemprop="text">
+                                    <p>DINOv3 can be installed in several ways:</p>
+                                    <ol>
+                                        <li><strong>Via pip:</strong> <code>pip install dinov3</code></li>
+                                        <li><strong>From source:</strong> Clone the repository and install dependencies</li>
+                                        <li><strong>Docker:</strong> Use our pre-built Docker containers</li>
+                                    </ol>
+                                    <p>For detailed instructions, see our <a href="#installation">Installation Guide</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span itemprop="name">What are the system requirements?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <div itemprop="text">
+                                    <p><strong>Minimum Requirements:</strong></p>
+                                    <ul>
+                                        <li>Python 3.8 or higher</li>
+                                        <li>PyTorch 1.12 or higher</li>
+                                        <li>8GB RAM (16GB recommended)</li>
+                                        <li>CUDA-compatible GPU (optional but recommended)</li>
+                                    </ul>
+                                    <p><strong>Recommended:</strong> NVIDIA GPU with 8GB+ VRAM for optimal performance.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span itemprop="name">How do I load a pre-trained DINOv3 model?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <div itemprop="text">
+                                    <pre><code>import torch
+from dinov3 import DINOv3
+
+# Load pre-trained model
+model = DINOv3.from_pretrained('dinov3_vitb14')
+model.eval()
+
+# Process an image
+with torch.no_grad():
+    features = model(image_tensor)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span itemprop="name">Can I use DINOv3 for commercial projects?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <div itemprop="text">
+                                    <p>DINOv3 is released under a Creative Commons Attribution-NonCommercial 4.0 International License. For commercial use, please contact Meta AI Research for licensing arrangements.</p>
+                                    <p>Academic and research use is permitted under the standard license. See our <a href="terms-of-service.html">Terms of Service</a> for details.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span itemprop="name">How do I cite DINOv3 in my research?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <div itemprop="text">
+                                    <p>Please cite our paper when using DINOv3 in your research:</p>
+                                    <pre><code>@article{oquab2023dinov3,
+  title={DINOv3: Learning Robust Visual Features without Supervision},
+  author={Oquab, Maxime and Darcet, Timothée and Moutakanni, Théo},
+  journal={arXiv preprint arXiv:2304.07193},
+  year={2023}
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                <span itemprop="name">What computer vision tasks does DINOv3 support?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer" itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+                                <div itemprop="text">
+                                    <p>DINOv3 excels at various computer vision tasks:</p>
+                                    <ul>
+                                        <li><strong>Object Detection:</strong> Identify and locate objects in images</li>
+                                        <li><strong>Semantic Segmentation:</strong> Pixel-level image understanding</li>
+                                        <li><strong>Depth Estimation:</strong> Predict depth information from single images</li>
+                                        <li><strong>Image Classification:</strong> Categorize images into classes</li>
+                                        <li><strong>Feature Extraction:</strong> Generate rich visual representations</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Documentation Sections -->
+                <section id="documentation" class="documentation-section">
+                    <h2>Documentation</h2>
+                    <div class="doc-grid">
+                        <div class="doc-category">
+                            <h3><i class="fas fa-rocket"></i> Getting Started</h3>
+                            <ul>
+                                <li><a href="#quickstart">Quickstart Guide</a></li>
+                                <li><a href="#installation">Installation Instructions</a></li>
+                                <li><a href="#first-model">Loading Your First Model</a></li>
+                                <li><a href="#basic-usage">Basic Usage Examples</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="doc-category">
+                            <h3><i class="fas fa-code"></i> API Reference</h3>
+                            <ul>
+                                <li><a href="#api-models">Model Classes</a></li>
+                                <li><a href="#api-transforms">Data Transforms</a></li>
+                                <li><a href="#api-utils">Utility Functions</a></li>
+                                <li><a href="#api-examples">Code Examples</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="doc-category">
+                            <h3><i class="fas fa-book"></i> Tutorials</h3>
+                            <ul>
+                                <li><a href="#tutorial-detection">Object Detection Tutorial</a></li>
+                                <li><a href="#tutorial-segmentation">Segmentation Tutorial</a></li>
+                                <li><a href="#tutorial-features">Feature Extraction Guide</a></li>
+                                <li><a href="#tutorial-finetuning">Fine-tuning Best Practices</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="doc-category">
+                            <h3><i class="fas fa-wrench"></i> Advanced Topics</h3>
+                            <ul>
+                                <li><a href="#advanced-optimization">Performance Optimization</a></li>
+                                <li><a href="#advanced-deployment">Production Deployment</a></li>
+                                <li><a href="#advanced-custom">Custom Architectures</a></li>
+                                <li><a href="#advanced-research">Research Applications</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting -->
+                <section id="troubleshooting" class="troubleshooting-section">
+                    <h2>Troubleshooting</h2>
+                    <div class="troubleshooting-grid">
+                        <div class="trouble-category">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Common Issues</h3>
+                            <div class="trouble-item">
+                                <h4>CUDA Out of Memory</h4>
+                                <p>Reduce batch size or use gradient checkpointing to handle GPU memory limitations.</p>
+                                <a href="#cuda-memory" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="trouble-item">
+                                <h4>Model Loading Errors</h4>
+                                <p>Ensure you have the correct PyTorch version and sufficient disk space for model downloads.</p>
+                                <a href="#model-loading" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="trouble-item">
+                                <h4>Slow Inference</h4>
+                                <p>Optimize your model with TorchScript compilation or use mixed precision training.</p>
+                                <a href="#slow-inference" class="learn-more">Learn More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="trouble-category">
+                            <h3><i class="fas fa-tools"></i> Performance Tips</h3>
+                            <ul>
+                                <li>Use GPU acceleration when available</li>
+                                <li>Batch multiple images for better throughput</li>
+                                <li>Consider model quantization for deployment</li>
+                                <li>Cache preprocessed data for repeated use</li>
+                                <li>Use appropriate image resolution for your task</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Community and Support -->
+                <section class="community-section">
+                    <h2>Community & Support</h2>
+                    <div class="community-grid">
+                        <div class="community-card">
+                            <div class="card-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <h3>GitHub Issues</h3>
+                            <p>Report bugs, request features, or get technical help from our development team</p>
+                            <a href="https://github.com/facebookresearch/dinov3/issues" target="_blank" class="btn btn-outline">Open Issue</a>
+                        </div>
+                        
+                        <div class="community-card">
+                            <div class="card-icon">
+                                <i class="fab fa-discord"></i>
+                            </div>
+                            <h3>Research Community</h3>
+                            <p>Join discussions with researchers and developers using DINOv3</p>
+                            <a href="#" class="btn btn-outline">Join Community</a>
+                        </div>
+                        
+                        <div class="community-card">
+                            <div class="card-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3>Contact Us</h3>
+                            <p>Get in touch with our team for partnership inquiries or technical support</p>
+                            <a href="#contact" class="btn btn-outline">Send Message</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Form -->
+                <section id="contact" class="contact-section">
+                    <h2>Contact Support</h2>
+                    <div class="contact-container">
+                        <div class="contact-info">
+                            <h3>Get Help</h3>
+                            <p>Can't find what you're looking for? Send us a message and we'll get back to you within 24 hours.</p>
+                            <div class="contact-methods">
+                                <div class="contact-method">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <h4>Response Time</h4>
+                                        <p>Within 24 hours</p>
+                                    </div>
+                                </div>
+                                <div class="contact-method">
+                                    <i class="fas fa-globe"></i>
+                                    <div>
+                                        <h4>Support Hours</h4>
+                                        <p>24/7 Community Support</p>
+                                    </div>
+                                </div>
+                                <div class="contact-method">
+                                    <i class="fas fa-users"></i>
+                                    <div>
+                                        <h4>Support Team</h4>
+                                        <p>AI Research Specialists</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" name="category">
+                                    <option value="technical">Technical Support</option>
+                                    <option value="documentation">Documentation</option>
+                                    <option value="bug">Bug Report</option>
+                                    <option value="feature">Feature Request</option>
+                                    <option value="licensing">Licensing</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject *</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message *</label>
+                                <textarea id="message" name="message" rows="6" required placeholder="Describe your question or issue in detail..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required>
+                                    <span class="checkmark"></span>
+                                    I agree to the <a href="terms-of-service.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-eye brand-icon"></i>
+                        <span class="brand-text">DINOv3</span>
+                    </div>
+                    <p>State-of-the-art computer vision model trained with self-supervised learning.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://arxiv.org/abs/2304.07193" target="_blank">ArXiv Paper</a></li>
+                        <li><a href="https://github.com/facebookresearch/dinov3" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://huggingface.co/facebook/dinov3" target="_blank">Hugging Face Hub</a></li>
+                        <li><a href="blog.html">Research Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DINOv3 Computer Vision Model by Meta AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = element.querySelector('i');
+            
+            faqItem.classList.toggle('active');
+            
+            if (faqItem.classList.contains('active')) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.style.maxHeight = '0';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+</body>
+</html>
