@@ -1,21 +1,35 @@
-// Smooth scrolling for navigation links
+// Optimized initialization with delayed loading
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle (if needed in future)
+    // Critical functionality first
+    initializeCriticalFeatures();
+    
+    // Non-critical features delayed
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => initializeNonCriticalFeatures(), { timeout: 3000 });
+    } else {
+        setTimeout(initializeNonCriticalFeatures, 1000);
+    }
+});
+
+function initializeCriticalFeatures() {
+    // Essential navigation functionality only
     const navLinks = document.querySelectorAll('.nav-link');
     
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+        if (link.getAttribute('href').startsWith('#')) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
     });
 
     // Header background on scroll - now handled by unified scroll handler
@@ -694,8 +708,20 @@ function createUnifiedScrollHandler() {
     }, { passive: true });
 }
 
-// Initialize unified scroll handler
-createUnifiedScrollHandler();
+}
+
+// Non-critical features moved to separate function
+function initializeNonCriticalFeatures() {
+    // Initialize unified scroll handler
+    createUnifiedScrollHandler();
+    
+    // Initialize video features if present
+    initializeVideoFeatures();
+    initializeLocalVideo();
+    
+    // Initialize performance tracking
+    trackPerformance();
+}
 
 // Handle external links
 document.addEventListener('click', function(e) {
