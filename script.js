@@ -1,70 +1,82 @@
-// Performance-optimized initialization
+// Smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', function() {
-    // Critical functionality first - only what's needed for initial user interaction
-    initializeCriticalFeatures();
-    
-    // Delay non-critical features until after initial paint
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => {
-            initializeNonCriticalFeatures();
-        }, { timeout: 2000 });
-    } else {
-        setTimeout(() => {
-            initializeNonCriticalFeatures();
-        }, 500);
-    }
-});
-
-function initializeCriticalFeatures() {
-    // Only essential features for immediate user interaction
-    
-    // Smooth scroll navigation - critical for UX
+    // Mobile menu toggle (if needed in future)
     const navLinks = document.querySelectorAll('.nav-link');
+    
     navLinks.forEach(link => {
-        if (link.getAttribute('href')?.startsWith('#')) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    targetSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }, { passive: false });
-        }
-    });
-    
-    // Critical: Initialize video features immediately
-    initializeVideoFeatures();
-    
-    // Essential scroll handler for header with throttling
-    let ticking = false;
-    function updateHeader() {
-        const header = document.querySelector('.header');
-        if (header) {
-            if (window.scrollY > 50) {
-                header.style.background = 'rgba(0, 0, 0, 0.2)';
-            } else {
-                header.style.background = 'rgba(0, 0, 0, 0.1)';
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
-        }
-        ticking = false;
-    }
+        });
+    });
+
+    // Header background on scroll
+    const header = document.querySelector('.header');
     
     window.addEventListener('scroll', function() {
-        if (!ticking) {
-            requestAnimationFrame(updateHeader);
-            ticking = true;
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(10, 10, 10, 0.98)';
+        } else {
+            header.style.background = 'rgba(10, 10, 10, 0.95)';
         }
-    }, { passive: true });
+    });
 
-    // Move animation observer to non-critical features
-}
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-// Moved animation and navigation highlighting to non-critical features
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements for animation
+    const animatedElements = document.querySelectorAll('.feature-card, .application-card, .resource-card, .timeline-item');
+    
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    // Active navigation link highlighting
+    const sections = document.querySelectorAll('section[id]');
+    
+    function highlightNavLink() {
+        const scrollPosition = window.scrollY + 100;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', highlightNavLink);
 
     // Statistics counter animation
     function animateCounters() {
@@ -286,15 +298,8 @@ function initializeCriticalFeatures() {
     
     trackUserEngagement();
 
-    // Video interaction functionality - Only for pages with video
+    // Video interaction functionality
     function initializeVideoFeatures() {
-        // Check if we have video elements before initializing
-        const hasVideo = document.querySelector('#hero-video') || document.querySelector('.video-container');
-        if (!hasVideo) {
-            console.log('No video elements found, skipping video initialization');
-            return;
-        }
-        
         const videoContainer = document.querySelector('.video-container');
         const videoOverlay = document.querySelector('.video-overlay');
         const iframe = document.querySelector('#hero-video');
@@ -346,16 +351,13 @@ function initializeCriticalFeatures() {
     
     initializeVideoFeatures();
 
-    // Setup local video player with optimized loading - Only for video pages
+    // Setup local video player with optimized loading
     function initializeLocalVideo() {
         const video = document.querySelector('#hero-video');
-        if (!video) {
-            console.log('No video element found, skipping local video initialization');
-            return;
-        }
-        
         const loadingOverlay = document.querySelector('#video-loading');
         const playOverlay = document.querySelector('#video-play-overlay');
+        
+        if (!video) return;
         
         // Show loading initially
         if (loadingOverlay) {
@@ -618,120 +620,12 @@ function debounce(func, wait) {
     };
 }
 
-// Unified optimized scroll handler - combines all scroll functions
-function createUnifiedScrollHandler() {
-    const header = document.querySelector('.header');
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let ticking = false;
-    
-    function unifiedScrollHandler() {
-        const scrollY = window.scrollY;
-        
-        // Header background (replaces line 24-30)
-        if (header) {
-            if (scrollY > 100) {
-                header.style.background = 'rgba(10, 10, 10, 0.98)';
-            } else {
-                header.style.background = 'rgba(10, 10, 10, 0.95)';
-            }
-        }
-        
-        // Navigation highlighting (replaces line 100)
-        if (sections.length > 0 && navLinks.length > 0) {
-            const scrollPosition = scrollY + 100;
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                const sectionId = section.getAttribute('id');
-                
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${sectionId}`) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
-        }
-        
-        ticking = false;
-    }
-    
-    // Throttled scroll event
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            requestAnimationFrame(unifiedScrollHandler);
-            ticking = true;
-        }
-    }, { passive: true });
-}
+// Optimized scroll handler
+const optimizedScrollHandler = debounce(function() {
+    // Any scroll-dependent functions can be placed here
+}, 16); // ~60fps
 
-}
-
-// Non-critical features moved to separate function
-function initializeNonCriticalFeatures() {
-    // Initialize animations with Intersection Observer
-    initializeAnimations();
-    
-    // Initialize unified scroll handler
-    createUnifiedScrollHandler();
-    
-    // Initialize performance tracking (non-critical)
-    trackPerformance();
-    
-    // Initialize local video features if needed
-    if (typeof initializeLocalVideo === 'function') {
-        initializeLocalVideo();
-    }
-}
-
-// Optimized animation initialization
-function initializeAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-                observer.unobserve(entry.target); // Stop observing after animation
-            }
-        });
-    }, observerOptions);
-
-    // Batch DOM queries for better performance
-    const animatedElements = document.querySelectorAll('.feature-card, .stat-card, .demo-card, .application-card, .resource-card, .timeline-item');
-    
-    if (animatedElements.length > 0) {
-        // Use requestIdleCallback for non-blocking initialization
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                animatedElements.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(20px)';
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(el);
-                });
-            });
-        } else {
-            setTimeout(() => {
-                animatedElements.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(20px)';
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(el);
-                });
-            }, 100);
-        }
-    }
-}
+window.addEventListener('scroll', optimizedScrollHandler);
 
 // Handle external links
 document.addEventListener('click', function(e) {
