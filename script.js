@@ -1,26 +1,27 @@
-// Optimized initialization with delayed loading
+// Performance-optimized initialization
 document.addEventListener('DOMContentLoaded', function() {
-    // Critical functionality first
+    // Critical functionality first - only what's needed for initial user interaction
     initializeCriticalFeatures();
     
-    // Non-critical features delayed
+    // Delay non-critical features until after initial paint
     if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => initializeNonCriticalFeatures(), { timeout: 3000 });
+        requestIdleCallback(() => {
+            initializeNonCriticalFeatures();
+        }, { timeout: 2000 });
     } else {
-        setTimeout(initializeNonCriticalFeatures, 1000);
+        setTimeout(() => {
+            initializeNonCriticalFeatures();
+        }, 500);
     }
 });
 
 function initializeCriticalFeatures() {
-    // Essential navigation functionality only
+    // Only essential features for immediate user interaction
+    
+    // Smooth scroll navigation - critical for UX
     const navLinks = document.querySelectorAll('.nav-link');
-    
-    // CRITICAL: Initialize video immediately for user interaction
-    initializeVideoFeatures();
-    initializeLocalVideo();
-    
     navLinks.forEach(link => {
-        if (link.getAttribute('href').startsWith('#')) {
+        if (link.getAttribute('href')?.startsWith('#')) {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
@@ -32,81 +33,38 @@ function initializeCriticalFeatures() {
                         block: 'start'
                     });
                 }
-            });
+            }, { passive: false });
         }
     });
-
-    // Header background on scroll - now handled by unified scroll handler
-
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    
+    // Critical: Initialize video features immediately
+    initializeVideoFeatures();
+    
+    // Essential scroll handler for header with throttling
+    let ticking = false;
+    function updateHeader() {
+        const header = document.querySelector('.header');
+        if (header) {
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(0, 0, 0, 0.2)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.1)';
             }
-        });
-    }, observerOptions);
-
-    // Observe elements for animation with performance optimization
-    function initializeAnimatedElements() {
-        const animatedElements = document.querySelectorAll('.feature-card, .application-card, .resource-card, .timeline-item');
-        
-        if (animatedElements.length === 0) return;
-        
-        // Use requestIdleCallback to avoid blocking main thread
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                animatedElements.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(30px)';
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(el);
-                });
-            });
-        } else {
-            // Fallback: Use setTimeout to defer execution
-            setTimeout(() => {
-                animatedElements.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(30px)';
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(el);
-                });
-            }, 0);
         }
+        ticking = false;
     }
     
-    initializeAnimatedElements();
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateHeader);
+            ticking = true;
+        }
+    }, { passive: true });
 
-    // Active navigation link highlighting
-    const sections = document.querySelectorAll('section[id]');
-    
-    function highlightNavLink() {
-        const scrollPosition = window.scrollY + 100;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-    
-    // Scroll handler will be combined with others for performance
+    // Move animation observer to non-critical features
+}
+
+// Moved animation and navigation highlighting to non-critical features
 
     // Statistics counter animation
     function animateCounters() {
@@ -716,11 +674,63 @@ function createUnifiedScrollHandler() {
 
 // Non-critical features moved to separate function
 function initializeNonCriticalFeatures() {
+    // Initialize animations with Intersection Observer
+    initializeAnimations();
+    
     // Initialize unified scroll handler
     createUnifiedScrollHandler();
     
     // Initialize performance tracking (non-critical)
     trackPerformance();
+    
+    // Initialize local video features if needed
+    if (typeof initializeLocalVideo === 'function') {
+        initializeLocalVideo();
+    }
+}
+
+// Optimized animation initialization
+function initializeAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target); // Stop observing after animation
+            }
+        });
+    }, observerOptions);
+
+    // Batch DOM queries for better performance
+    const animatedElements = document.querySelectorAll('.feature-card, .stat-card, .demo-card, .application-card, .resource-card, .timeline-item');
+    
+    if (animatedElements.length > 0) {
+        // Use requestIdleCallback for non-blocking initialization
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                animatedElements.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(el);
+                });
+            });
+        } else {
+            setTimeout(() => {
+                animatedElements.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(el);
+                });
+            }, 100);
+        }
+    }
 }
 
 // Handle external links
