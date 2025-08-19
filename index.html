@@ -15,8 +15,8 @@
     <!-- Video preload removed to reduce initial load size -->
     
     <!-- Non-critical CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></noscript>
+    <!-- Replace FontAwesome with minimal custom icons -->
+    <link rel="stylesheet" href="icons.css">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -82,7 +82,7 @@
     <meta name="supported-color-schemes" content="dark light">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <!-- Removed CDN prefetch as we no longer use FontAwesome CDN -->
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
     
