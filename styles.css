@@ -14,6 +14,13 @@
     font-display: swap;
 }
 
+/* Ensure all custom fonts use optimal display */
+@font-face {
+    font-family: 'Inter';
+    font-display: swap;
+    src: local('Inter');
+}
+
 body {
     font-family: 'Inter', 'Inter-fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
