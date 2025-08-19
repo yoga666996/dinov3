@@ -15,6 +15,10 @@ function initializeCriticalFeatures() {
     // Essential navigation functionality only
     const navLinks = document.querySelectorAll('.nav-link');
     
+    // CRITICAL: Initialize video immediately for user interaction
+    initializeVideoFeatures();
+    initializeLocalVideo();
+    
     navLinks.forEach(link => {
         if (link.getAttribute('href').startsWith('#')) {
             link.addEventListener('click', function(e) {
@@ -715,11 +719,7 @@ function initializeNonCriticalFeatures() {
     // Initialize unified scroll handler
     createUnifiedScrollHandler();
     
-    // Initialize video features if present
-    initializeVideoFeatures();
-    initializeLocalVideo();
-    
-    // Initialize performance tracking
+    // Initialize performance tracking (non-critical)
     trackPerformance();
 }
 
