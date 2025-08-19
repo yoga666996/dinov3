@@ -5,8 +5,17 @@
     box-sizing: border-box;
 }
 
+/* Enhanced font loading optimization */
+@font-face {
+    font-family: 'Inter-fallback';
+    size-adjust: 95%;
+    ascent-override: 90%;
+    src: local('Arial'), local('Helvetica'), local('sans-serif');
+    font-display: swap;
+}
+
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', 'Inter-fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: #ffffff;
     background: #0a0a0a;
@@ -1347,37 +1356,10 @@ html {
 }
 
 /* Loading Animation */
+/* Optimized minimal animations - only essential ones */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes glow {
@@ -1401,13 +1383,7 @@ html {
     animation: fadeInUp 0.6s ease-out;
 }
 
-.hero-content {
-    animation: slideInLeft 0.8s ease-out;
-}
-
-.hero-video {
-    animation: slideInRight 0.8s ease-out 0.2s both;
-}
+/* Removed heavy animations for better performance */
 
 .video-container {
     animation: glow 4s ease-in-out infinite;
