@@ -12,7 +12,7 @@
     <noscript><link rel="stylesheet" href="styles.css"></noscript>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-    <link rel="preload" href="6nQHtKwo-2U77si_.mp4" as="video" type="video/mp4">
+    <!-- Video preload removed to reduce initial load size -->
     
     <!-- Non-critical CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
@@ -80,9 +80,11 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="dark light">
     <meta name="supported-color-schemes" content="dark light">
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
     
     <!-- Core Web Vitals Optimization -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -248,7 +250,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8126269008200876"
          crossorigin="anonymous"></script>
     
-    <!-- Google Analytics (gtag.js) -->
+    <!-- Google Analytics (gtag.js) - Optimized loading -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0SZ20PQ9F"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -257,18 +259,14 @@
       gtag('config', 'G-P0SZ20PQ9F', {
         page_title: 'DINOv3 - Computer Vision Model',
         page_location: window.location.href,
+        send_page_view: true,
+        anonymize_ip: true,
+        allow_google_signals: true,
+        allow_ad_personalization_signals: false,
         custom_map: {
           'custom_parameter_1': 'model_type',
           'custom_parameter_2': 'research_area'
         }
-      });
-      
-      // Enhanced tracking for better SEO insights
-      gtag('config', 'G-P0SZ20PQ9F', {
-        send_page_view: true,
-        anonymize_ip: true,
-        allow_google_signals: true,
-        allow_ad_personalization_signals: false
       });
     </script>
 </head>
@@ -351,7 +349,9 @@
                                         <video 
                             id="hero-video"
                         class="hero-video-player"
-                        preload="auto"
+                        width="640"
+                        height="360"
+                        preload="none"
                         muted
                         playsinline
                         poster="https://dinov3.org/images/dinov3-video-thumbnail.jpg"
