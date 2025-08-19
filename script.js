@@ -18,16 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Header background on scroll
-    const header = document.querySelector('.header');
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(10, 10, 10, 0.98)';
-        } else {
-            header.style.background = 'rgba(10, 10, 10, 0.95)';
-        }
-    });
+    // Header background on scroll - now handled by unified scroll handler
 
     // Intersection Observer for animations
     const observerOptions = {
@@ -44,15 +35,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.feature-card, .application-card, .resource-card, .timeline-item');
+    // Observe elements for animation with performance optimization
+    function initializeAnimatedElements() {
+        const animatedElements = document.querySelectorAll('.feature-card, .application-card, .resource-card, .timeline-item');
+        
+        if (animatedElements.length === 0) return;
+        
+        // Use requestIdleCallback to avoid blocking main thread
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                animatedElements.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(el);
+                });
+            });
+        } else {
+            // Fallback: Use setTimeout to defer execution
+            setTimeout(() => {
+                animatedElements.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(el);
+                });
+            }, 0);
+        }
+    }
     
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
+    initializeAnimatedElements();
 
     // Active navigation link highlighting
     const sections = document.querySelectorAll('section[id]');
@@ -76,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    window.addEventListener('scroll', highlightNavLink);
+    // Scroll handler will be combined with others for performance
 
     // Statistics counter animation
     function animateCounters() {
@@ -298,8 +310,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     trackUserEngagement();
 
-    // Video interaction functionality
+    // Video interaction functionality - Only for pages with video
     function initializeVideoFeatures() {
+        // Check if we have video elements before initializing
+        const hasVideo = document.querySelector('#hero-video') || document.querySelector('.video-container');
+        if (!hasVideo) {
+            console.log('No video elements found, skipping video initialization');
+            return;
+        }
+        
         const videoContainer = document.querySelector('.video-container');
         const videoOverlay = document.querySelector('.video-overlay');
         const iframe = document.querySelector('#hero-video');
@@ -351,13 +370,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initializeVideoFeatures();
 
-    // Setup local video player with optimized loading
+    // Setup local video player with optimized loading - Only for video pages
     function initializeLocalVideo() {
         const video = document.querySelector('#hero-video');
+        if (!video) {
+            console.log('No video element found, skipping local video initialization');
+            return;
+        }
+        
         const loadingOverlay = document.querySelector('#video-loading');
         const playOverlay = document.querySelector('#video-play-overlay');
-        
-        if (!video) return;
         
         // Show loading initially
         if (loadingOverlay) {
@@ -620,12 +642,60 @@ function debounce(func, wait) {
     };
 }
 
-// Optimized scroll handler
-const optimizedScrollHandler = debounce(function() {
-    // Any scroll-dependent functions can be placed here
-}, 16); // ~60fps
+// Unified optimized scroll handler - combines all scroll functions
+function createUnifiedScrollHandler() {
+    const header = document.querySelector('.header');
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let ticking = false;
+    
+    function unifiedScrollHandler() {
+        const scrollY = window.scrollY;
+        
+        // Header background (replaces line 24-30)
+        if (header) {
+            if (scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        }
+        
+        // Navigation highlighting (replaces line 100)
+        if (sections.length > 0 && navLinks.length > 0) {
+            const scrollPosition = scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        ticking = false;
+    }
+    
+    // Throttled scroll event
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(unifiedScrollHandler);
+            ticking = true;
+        }
+    }, { passive: true });
+}
 
-window.addEventListener('scroll', optimizedScrollHandler);
+// Initialize unified scroll handler
+createUnifiedScrollHandler();
 
 // Handle external links
 document.addEventListener('click', function(e) {
