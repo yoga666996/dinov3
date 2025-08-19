@@ -7,12 +7,155 @@
     <meta name="description" content="Official dinov3 GitHub repository complete code pre-trained models Download dinov3 paper explore object detection demos meta dino v3 resources">
     <meta name="keywords" content="">
 
-    <!-- Critical Resource Preloading for Core Web Vitals -->
+    <!-- Critical CSS inlined for faster rendering -->
+    <style>
+        /* Critical above-the-fold styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Font loading optimization to prevent CLS */
+        body:not(.fonts-loaded) {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        /* Layout stability improvements */
+        .feature-card, .stat-card, .demo-card {
+            min-height: 200px; /* Prevent layout shift */
+        }
+        
+        .hero h1 {
+            min-height: 1.2em; /* Reserve space for title */
+        }
+        
+        /* Prevent layout shift from lazy-loaded content */
+        .video-container {
+            aspect-ratio: 16/9;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Skeleton loading for better perceived performance */
+        .loading-skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        @keyframes skeleton-loading {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+    
+    <!-- Non-critical CSS loaded asynchronously -->
     <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="styles.css"></noscript>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Preconnect to external domains for faster resource loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube.com" crossorigin>
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+    
+    <!-- Optimized font loading with preload and swap display -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet';document.body.classList.add('fonts-loaded');">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-    <!-- Video preload removed to reduce initial load size -->
+    
+    <!-- Font loading optimization script -->
+    <script>
+        // Prevent FOIT (Flash of Invisible Text) by adding font-display: swap
+        if ('fonts' in document) {
+            document.fonts.ready.then(function() {
+                document.body.classList.add('fonts-loaded');
+            });
+        }
+        
+        // Performance monitoring for Core Web Vitals
+        if ('web-vitals' in window || typeof webVitals !== 'undefined') {
+            // Web Vitals monitoring would go here
+        } else {
+            // Basic performance monitoring
+            window.addEventListener('load', function() {
+                if ('performance' in window && 'getEntriesByType' in performance) {
+                    setTimeout(function() {
+                        const navigation = performance.getEntriesByType('navigation')[0];
+                        const paint = performance.getEntriesByType('paint');
+                        
+                        console.log('Performance Metrics:');
+                        console.log('DOM Content Loaded:', navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart + 'ms');
+                        console.log('Load Complete:', navigation.loadEventEnd - navigation.loadEventStart + 'ms');
+                        
+                        paint.forEach(entry => {
+                            console.log(entry.name + ':', entry.startTime + 'ms');
+                        });
+                    }, 1000);
+                }
+            });
+        }
+    </script>
+    
+    <!-- Font loading detection for CLS prevention -->
+    <script>
+        // Detect when fonts are loaded and add class to body
+        if ('fonts' in document) {
+            document.fonts.ready.then(() => {
+                document.body.classList.add('fonts-loaded');
+            });
+        } else {
+            // Fallback for browsers without Font Loading API
+            setTimeout(() => {
+                document.body.classList.add('fonts-loaded');
+            }, 100);
+        }
+    </script>
     
     <!-- Non-critical CSS -->
     <!-- Replace FontAwesome with minimal custom icons -->
@@ -80,11 +223,18 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="dark light">
     <meta name="supported-color-schemes" content="dark light">
+    
+    <!-- Optimized preconnect hints for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Removed CDN prefetch as we no longer use FontAwesome CDN -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- DNS prefetch for additional resources -->
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="//fundingchoicesmessages.google.com">
     
     <!-- Core Web Vitals Optimization -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -246,28 +396,57 @@
     }
     </script>
 
-    <!-- Google Ads -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8126269008200876"
-         crossorigin="anonymous"></script>
-    
-    <!-- Google Analytics (gtag.js) - Optimized loading -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0SZ20PQ9F"></script>
+    <!-- Delayed loading for third-party scripts to improve performance -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-P0SZ20PQ9F', {
-        page_title: 'DINOv3 - Computer Vision Model',
-        page_location: window.location.href,
-        send_page_view: true,
-        anonymize_ip: true,
-        allow_google_signals: true,
-        allow_ad_personalization_signals: false,
-        custom_map: {
-          'custom_parameter_1': 'model_type',
-          'custom_parameter_2': 'research_area'
+      // Delay third-party scripts until user interaction or timeout
+      function loadThirdPartyScripts() {
+        // Load Google Ads
+        var adsScript = document.createElement('script');
+        adsScript.async = true;
+        adsScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8126269008200876';
+        adsScript.crossOrigin = 'anonymous';
+        document.head.appendChild(adsScript);
+        
+        // Load Google Analytics
+        var gtmScript = document.createElement('script');
+        gtmScript.async = true;
+        gtmScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-P0SZ20PQ9F';
+        gtmScript.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-P0SZ20PQ9F', {
+            page_title: 'DINOv3 - Computer Vision Model',
+            page_location: window.location.href,
+            send_page_view: true,
+            anonymize_ip: true,
+            allow_google_signals: true,
+            allow_ad_personalization_signals: false,
+            custom_map: {
+              'custom_parameter_1': 'model_type',
+              'custom_parameter_2': 'research_area'
+            }
+          });
+        };
+        document.head.appendChild(gtmScript);
+      }
+      
+      // Load after user interaction or 3 seconds
+      var loaded = false;
+      function loadScripts() {
+        if (!loaded) {
+          loaded = true;
+          loadThirdPartyScripts();
         }
+      }
+      
+      // Listen for user interactions
+      ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(function(event) {
+        window.addEventListener(event, loadScripts, {once: true, passive: true});
       });
+      
+      // Fallback: load after 3 seconds
+      setTimeout(loadScripts, 3000);
     </script>
 </head>
 <body>
@@ -863,6 +1042,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Load main script with defer for better performance -->
+    <script defer src="script.js"></script>
 </body>
 </html>
