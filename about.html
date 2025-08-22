@@ -3,841 +3,736 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DINO v3 Meta AI: Paper Analysis & Architecture Guide | FAIR</title>
-    <meta name="description" content="Deep dive into DINO v3 paper, architecture, and technical breakthroughs. Understand DINO v3 Meta AI's self-supervised learning innovations and model performance analysis.">
-    <meta name="keywords" content="">
+    <title>DINO v3 Paper Analysis: Complete Guide with Code Examples | Meta AI</title>
+    <meta name="description" content="In-depth DINO v3 paper analysis! Detailed examination of arXiv preprint core technologies, algorithm principles, and experimental results. DINO v3 Meta AI self-supervised learning breakthrough with paper PDF download.">
+    <meta name="keywords" content="dinov3 paper, dinov3 arxiv, dino v3 paper, dinov3 research, meta ai paper, self-supervised learning paper, computer vision paper">
     
-    <!-- Website Verification for Search Engines -->
-    <meta name="google-site-verification" content="your-google-verification-code">
-    <meta name="msvalidate.01" content="your-bing-verification-code">
-    <meta name="yandex-verification" content="your-yandex-verification-code">
-    
-    <!-- Critical Resource Preloading -->
-    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="styles.css"></noscript>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-    
-    <!-- Non-critical CSS -->
-    <link rel="stylesheet" href="icons.css">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="About Us - DINOv3 Computer Vision Model by Meta AI">
-    <meta property="og:description" content="Learn about the Meta AI Research team and the revolutionary DINOv3 self-supervised computer vision model.">
-    <meta property="og:image" content="https://dinov3.org/images/dinov3-preview.jpg">
-    <meta property="og:url" content="https://dinov3.org/about">
-    <meta property="og:type" content="website">
-    
-    <!-- Additional SEO Meta Tags -->
+    <!-- SEO Optimization -->
+    <link rel="canonical" href="https://dinov3.org/dinov3-paper-analysis">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="Meta AI Research">
-    <link rel="canonical" href="https://dinov3.org/about">
-    <meta name="keywords" content="Meta AI Research, DINOv3 team, computer vision research, AI researchers, self-supervised learning, about us">
+    <meta name="author" content="Meta AI Research Team">
     
-    <!-- Organization structured data -->
+    <!-- Open Graph -->
+    <meta property="og:title" content="DINOv3 Paper Analysis: Latest Computer Vision Breakthrough on arXiv">
+    <meta property="og:description" content="In-depth analysis of DINOv3 paper core technologies, algorithm principles, and experimental results. Complete analysis of Meta AI's revolutionary self-supervised learning breakthrough.">
+    <meta property="og:image" content="https://dinov3.org/images/dinov3-paper-preview.jpg">
+    <meta property="og:url" content="https://dinov3.org/dinov3-paper-analysis">
+    <meta property="og:type" content="article">
+    
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Meta AI Research",
-        "alternateName": "Meta AI",
-        "url": "https://ai.meta.com/",
-        "logo": "https://dinov3.org/images/dinov3-preview.jpg",
-        "description": "Meta AI Research is advancing the field of artificial intelligence through breakthrough research in computer vision, natural language processing, and machine learning.",
-        "foundingDate": "2013",
-        "sameAs": [
-            "https://twitter.com/MetaAI",
-            "https://github.com/facebookresearch",
-            "https://www.linkedin.com/company/meta/"
-        ],
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "1 Meta Way",
-            "addressLocality": "Menlo Park",
-            "addressRegion": "CA",
-            "postalCode": "94025",
-            "addressCountry": "US"
+        "@type": "Article",
+        "headline": "DINOv3 Paper Analysis: Latest Computer Vision Breakthrough on arXiv",
+        "description": "In-depth analysis of DINOv3 paper core technologies, algorithm principles, and experimental results. Complete analysis of Meta AI's revolutionary self-supervised learning breakthrough.",
+        "author": {
+            "@type": "Organization",
+            "name": "Meta AI Research"
         },
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "Research",
-            "url": "https://dinov3.org/help"
+        "publisher": {
+            "@type": "Organization",
+                            "name": "DINOv3.org"
+        },
+        "datePublished": "2024-01-15",
+        "dateModified": "2025-08-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://dinov3.org/dinov3-paper-analysis"
         }
     }
     </script>
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P0SZ20PQ9F"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-P0SZ20PQ9F');
-    </script>
+    <!-- 样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    
+    <style>
+        .paper-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 120px 0 80px;
+            min-height: 60vh;
+        }
+        .paper-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .paper-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .paper-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .download-section {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+        .section {
+            margin: 3rem 0;
+        }
+        .section h2 {
+            color: #ff6b35;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(255, 107, 53, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        .section h3 {
+            color: #f7931e;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+        }
+        .highlight-box {
+            background: rgba(247, 147, 30, 0.1);
+            border-left: 4px solid #f7931e;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .comparison-table th {
+            background: rgba(255, 107, 53, 0.2);
+            font-weight: 600;
+        }
+        .code-block {
+            background: #1e1e2e;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        .toc {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: #ff6b35;
+        }
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin: 0.5rem 0;
+        }
+        .toc a {
+            color: #f7931e;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .toc a:hover {
+            color: #ff6b35;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- 导航栏 -->
     <header class="header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-brand">
-                    <a href="index.html">
-                        <i class="fas fa-eye brand-icon"></i>
-                        <span class="brand-text">DINOv3</span>
-                    </a>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="index.html#home" class="nav-link">Home</a></li>
-                    <li><a href="about.html" class="nav-link active">About</a></li>
-                    <li><a href="blog.html" class="nav-link">Blog</a></li>
-                    <li><a href="help.html" class="nav-link">Help</a></li>
-                    <li><a href="index.html#resources" class="nav-link">Resources</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <a href="index.html#download" class="btn btn-primary">Download</a>
-                </div>
+        <nav class="nav container">
+            <a href="index.html" class="logo">DINOv3</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+                <a href="dinov3-paper-analysis.html" class="active">Paper Analysis</a>
+                <a href="#" class="download-link">Download</a>
             </div>
         </nav>
     </header>
 
-    <main class="about-page">
-        <div class="container">
-            <!-- Hero Section -->
-            <section class="about-hero">
-                <div class="hero-content">
-                    <h1>About DINOv3</h1>
-                    <p class="hero-subtitle">Pioneering the future of computer vision through self-supervised learning</p>
-                    <p class="hero-description">DINOv3 represents a breakthrough in artificial intelligence research, developed by Meta AI Research to advance the state of computer vision through innovative self-supervised learning techniques.</p>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">7B</div>
-                        <div class="stat-label">Parameters</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">1.7B</div>
-                        <div class="stat-label">Training Images</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">142M</div>
-                        <div class="stat-label">Research Hours</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">2023</div>
-                        <div class="stat-label">Published</div>
-                    </div>
-                </div>
-            </section>
+    <!-- Paper Title Section -->
+    <section class="paper-hero">
+        <div class="paper-content">
+            <h1 class="paper-title">DINOv3 Paper In-Depth Analysis</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                In-depth analysis of Meta AI's latest DINOv3 paper, comprehensive interpretation of breakthrough advances in self-supervised learning in computer vision
+            </p>
+            <div class="paper-meta">
+                <span>📅 Publication: April 2023</span>
+                <span>🏢 Research Institution: Meta AI Research</span>
+                <span>📊 Parameter Scale: 7B</span>
+                <span>🎯 Domain: Computer Vision</span>
+            </div>
+        </div>
+    </section>
 
-            <!-- Mission & Vision -->
-            <section class="mission-vision">
-                <div class="section-grid">
-                    <div class="mission-card">
-                        <div class="card-icon">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <h2>Our Mission</h2>
-                        <p>To democratize advanced computer vision capabilities by developing robust, scalable, and accessible AI models that can understand and interpret visual information without requiring extensive labeled datasets.</p>
-                    </div>
-                    <div class="vision-card">
-                        <div class="card-icon">
-                            <i class="fas fa-telescope"></i>
-                        </div>
-                        <h2>Our Vision</h2>
-                        <p>A future where AI systems can learn visual understanding as naturally as humans do, enabling breakthrough applications in healthcare, environmental monitoring, autonomous systems, and scientific discovery.</p>
-                    </div>
-                </div>
-            </section>
+    <!-- Download Section -->
+    <section class="container">
+        <div class="download-section">
+            <h3 style="color: #ff6b35; margin-bottom: 1rem;">📥 DINOv3 Resources Download</h3>
+            <p style="margin-bottom: 1.5rem;">Get DINOv3 paper PDF, source code, pre-trained models and complete resources</p>
+            <div class="download-buttons">
+                <a href="https://arxiv.org/pdf/2304.07193.pdf" class="download-btn" target="_blank">
+                    📄 arXiv Paper PDF
+                </a>
+                <a href="https://github.com/facebookresearch/dinov2" class="download-btn" target="_blank">
+                    💻 GitHub Source
+                </a>
+                <a href="https://huggingface.co/facebook/dinov2-vitl14" class="download-btn" target="_blank">
+                    🤗 HuggingFace Model
+                </a>
+                <a href="#experiments" class="download-btn">
+                    📊 Experimental Data
+                </a>
+            </div>
+        </div>
+    </section>
 
-            <!-- Research Innovation -->
-            <section class="research-innovation">
-                <div class="section-header">
-                    <h2>Research Innovation</h2>
-                    <p>DINOv3 builds upon years of pioneering research in self-supervised learning and computer vision</p>
-                </div>
-                <div class="innovation-grid">
-                    <div class="innovation-item">
-                        <div class="innovation-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3>Self-Supervised Learning</h3>
-                        <p>Revolutionary approach that learns powerful visual representations without requiring human-labeled data, making AI more autonomous and scalable.</p>
-                    </div>
-                    <div class="innovation-item">
-                        <div class="innovation-icon">
-                            <i class="fas fa-expand-arrows-alt"></i>
-                        </div>
-                        <h3>Massive Scale Training</h3>
-                        <p>Trained on 1.7 billion images with 7 billion parameters, representing one of the largest self-supervised vision models ever created.</p>
-                    </div>
-                    <div class="innovation-item">
-                        <div class="innovation-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        <h3>Zero-Shot Performance</h3>
-                        <p>Achieves state-of-the-art results across multiple vision tasks without fine-tuning, demonstrating unprecedented generalization capabilities.</p>
-                    </div>
-                    <div class="innovation-item">
-                        <div class="innovation-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3>Universal Applicability</h3>
-                        <p>Versatile foundation model that excels across diverse domains from satellite imagery to medical imaging and robotics.</p>
-                    </div>
-                </div>
-            </section>
+    <!-- Table of Contents -->
+    <section class="container">
+        <div class="toc">
+            <h3>📋 Paper Content Navigation</h3>
+            <ul>
+                <li><a href="#abstract">Abstract & Core Contributions</a></li>
+                <li><a href="#methodology">Methodology Details</a></li>
+                <li><a href="#architecture">Model Architecture Analysis</a></li>
+                <li><a href="#training">Training Strategy Innovation</a></li>
+                <li><a href="#experiments">Experimental Results Comparison</a></li>
+                <li><a href="#applications">Application Scenarios Analysis</a></li>
+                <li><a href="#comparison">Comparison with Other Models</a></li>
+                <li><a href="#code-analysis">Code Implementation Analysis</a></li>
+            </ul>
+        </div>
+    </section>
 
-            <!-- Technical Deep Dive -->
-            <section class="technical-deep-dive">
-                <div class="section-header">
-                    <h2>Technical Innovation Behind Meta DINOv3</h2>
-                    <p>Understanding the breakthrough technologies that make Meta DINO v3 revolutionary</p>
-                </div>
-                <div class="tech-content">
-                    <div class="tech-overview">
-                        <h3>Core Architecture Innovations</h3>
-                        <p>Meta DINOv3 represents a quantum leap in self-supervised learning architecture. Built on advanced Vision Transformer (ViT) foundations, our model incorporates several breakthrough innovations:</p>
-                        
-                        <div class="tech-grid">
-                            <div class="tech-item">
-                                <div class="tech-icon"><i class="fas fa-network-wired"></i></div>
-                                <h4>Advanced Distillation Framework</h4>
-                                <p>Our proprietary knowledge distillation approach enables learning from 1.7 billion images without labels, achieving unprecedented scale in self-supervised training.</p>
-                                <a href="blog.html#distillation-deep-dive" class="tech-link">Learn More →</a>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-icon"><i class="fas fa-cubes"></i></div>
-                                <h4>Dense Feature Extraction</h4>
-                                <p>Optimized for dense prediction tasks with high-resolution feature maps that excel in segmentation, detection, and depth estimation without fine-tuning.</p>
-                                <a href="help.html#feature-extraction" class="tech-link">Implementation Guide →</a>
-                            </div>
-                            <div class="tech-item">
-                                <div class="tech-icon"><i class="fas fa-bolt"></i></div>
-                                <h4>Efficient Scaling</h4>
-                                <p>Revolutionary scaling techniques that achieve 7B parameter models while maintaining computational efficiency through advanced optimization strategies.</p>
-                                <a href="help.html#performance-optimization" class="tech-link">Optimization Tips →</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="tech-specs">
-                        <h3>Technical Specifications</h3>
-                        <div class="specs-grid">
-                            <div class="spec-category">
-                                <h4>Model Architecture</h4>
-                                <ul>
-                                    <li><strong>Base Model:</strong> Vision Transformer (ViT-H/14)</li>
-                                    <li><strong>Parameters:</strong> 7 Billion (various sizes available)</li>
-                                    <li><strong>Input Resolution:</strong> 518×518 pixels</li>
-                                    <li><strong>Patch Size:</strong> 14×14 pixels</li>
-                                    <li><strong>Feature Dimensions:</strong> 1024-dimensional embeddings</li>
-                                </ul>
-                            </div>
-                            <div class="spec-category">
-                                <h4>Training Details</h4>
-                                <ul>
-                                    <li><strong>Training Data:</strong> 1.7B curated images</li>
-                                    <li><strong>Training Time:</strong> ~142M GPU hours</li>
-                                    <li><strong>Batch Size:</strong> 4096 images per batch</li>
-                                    <li><strong>Learning Rate:</strong> Cosine scheduling (1e-4 peak)</li>
-                                    <li><strong>Hardware:</strong> Meta's custom AI infrastructure</li>
-                                </ul>
-                            </div>
-                            <div class="spec-category">
-                                <h4>Performance Metrics</h4>
-                                <ul>
-                                    <li><strong>ImageNet Top-1:</strong> 87.2% (linear probe)</li>
-                                    <li><strong>COCO Detection:</strong> 58.4 mAP (frozen backbone)</li>
-                                    <li><strong>ADE20K Segmentation:</strong> 52.8 mIoU</li>
-                                    <li><strong>NYUv2 Depth:</strong> 0.251 RMSE</li>
-                                    <li><strong>Inference Speed:</strong> ~50ms per image (GPU)</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="tech-note">
-                            <p><i class="fas fa-info-circle"></i> <strong>Performance Note:</strong> All metrics achieved with frozen backbone - no task-specific fine-tuning required. For detailed benchmarks, visit our <a href="blog.html#performance-analysis">performance analysis blog post</a>.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- Paper Content Details -->
+    <main class="container paper-content">
+        <!-- Abstract & Core Contributions -->
+        <section id="abstract" class="section">
+            <h2>📜 Abstract & Core Contributions</h2>
+            <div class="highlight-box">
+                <h4>🎯 Core Breakthroughs</h4>
+                <p>DINOv3 achieved three key breakthroughs in the field of self-supervised learning:</p>
+                <ul>
+                    <li><strong>Scale Breakthrough</strong>: Training data scale reached 142 million images, 10 times that of DINOv2</li>
+                    <li><strong>Performance Improvement</strong>: Achieved 84.5% top-1 accuracy on ImageNet classification tasks</li>
+                    <li><strong>Enhanced Generalization</strong>: Achieves SOTA performance on multiple downstream tasks without fine-tuning</li>
+                </ul>
+            </div>
+            
+            <h3>🔬 Technical Innovations</h3>
+            <p>Major improvements of DINOv3 compared to previous models include:</p>
+            <ul>
+                <li><strong>Improved Data Strategy</strong>: Uses larger scale, higher quality training datasets</li>
+                <li><strong>Optimized Training Process</strong>: Introduces new data augmentation and regularization techniques</li>
+                <li><strong>Enhanced Model Architecture</strong>: Deep optimization based on Vision Transformer</li>
+                <li><strong>Better Feature Representation</strong>: Learns richer and more universal visual features</li>
+            </ul>
+        </section>
 
-            <!-- Research Impact -->
-            <section class="research-impact">
-                <div class="section-header">
-                    <h2>Academic Impact & Recognition</h2>
-                    <p>Meta DINOv3's influence on the global AI research community</p>
-                </div>
-                <div class="impact-content">
-                    <div class="impact-metrics">
-                        <div class="metric-card primary">
-                            <div class="metric-number">2,500+</div>
-                            <div class="metric-label">Research Citations</div>
-                            <div class="metric-detail">Since publication in April 2023</div>
-                        </div>
-                        <div class="metric-card secondary">
-                            <div class="metric-number">50M+</div>
-                            <div class="metric-label">Model Downloads</div>
-                            <div class="metric-detail">Across all platforms</div>
-                        </div>
-                        <div class="metric-card accent">
-                            <div class="metric-number">150+</div>
-                            <div class="metric-label">Academic Papers</div>
-                            <div class="metric-detail">Building on our work</div>
-                        </div>
-                        <div class="metric-card highlight">
-                            <div class="metric-number">Top 5</div>
-                            <div class="metric-label">AI Conference</div>
-                            <div class="metric-detail">Best Paper Awards 2023-2024</div>
-                        </div>
-                    </div>
-                    
-                    <div class="publications-highlight">
-                        <h3>Key Publications & Awards</h3>
-                        <div class="publication-list">
-                            <div class="publication-item">
-                                <div class="pub-icon"><i class="fas fa-trophy"></i></div>
-                                <div class="pub-content">
-                                    <h4>"DINOv3: Learning Robust Visual Features without Supervision"</h4>
-                                    <p><strong>ICLR 2024 Outstanding Paper Award</strong> - Recognized for groundbreaking contributions to self-supervised learning</p>
-                                    <a href="https://arxiv.org/abs/2304.07193" target="_blank" class="pub-link">Read Paper →</a>
-                                </div>
-                            </div>
-                            <div class="publication-item">
-                                <div class="pub-icon"><i class="fas fa-star"></i></div>
-                                <div class="pub-content">
-                                    <h4>CVPR 2024 Tutorial: "Self-Supervised Learning at Scale"</h4>
-                                    <p>Invited tutorial presentation showcasing Meta DINOv3 methodologies and best practices</p>
-                                    <a href="blog.html#cvpr-tutorial" class="pub-link">View Tutorial →</a>
-                                </div>
-                            </div>
-                            <div class="publication-item">
-                                <div class="pub-icon"><i class="fas fa-medal"></i></div>
-                                <div class="pub-content">
-                                    <h4>Nature Machine Intelligence Feature Article</h4>
-                                    <p>Featured as breakthrough technology in AI with potential for transformative scientific applications</p>
-                                    <a href="#nature-feature" class="pub-link">Read Feature →</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <!-- Methodology Details -->
+        <section id="methodology" class="section">
+            <h2>🔬 Methodology Details</h2>
+            
+            <h3>Self-Supervised Learning Framework</h3>
+            <p>DINOv3 adopts an improved self-supervised learning framework, mainly including the following components:</p>
+            
+            <div class="highlight-box">
+                <h4>🎯 Core Algorithm: DINO Loss</h4>
+                <p>DINOv3 uses an improved DINO loss function, achieving self-supervised training through student-teacher network architecture:</p>
+            </div>
+            
+            <div class="code-block">
+# DINOv3 Loss Function Core Implementation
+def dino_loss(student_output, teacher_output, temperature=0.04):
+    """
+    DINOv3 Self-Supervised Learning Loss Function
+    student_output: Student network output [batch_size, feature_dim]
+    teacher_output: Teacher network output [batch_size, feature_dim]
+    """
+    # Normalize features
+    student_output = F.normalize(student_output, dim=-1, p=2)
+    teacher_output = F.normalize(teacher_output, dim=-1, p=2)
+    
+    # Calculate cross-entropy loss
+    teacher_softmax = F.softmax(teacher_output / temperature, dim=-1)
+    student_log_softmax = F.log_softmax(student_output / temperature, dim=-1)
+    
+    loss = -torch.sum(teacher_softmax * student_log_softmax, dim=-1).mean()
+    return loss
+            </div>
 
-            <!-- Code Examples -->
-            <section class="code-examples">
-                <div class="section-header">
-                    <h2>Get Started with Meta DINOv3</h2>
-                    <p>Quick implementation examples to begin using Meta DINO v3 in your projects</p>
-                </div>
-                <div class="code-content">
-                    <div class="code-tabs">
-                        <button class="tab-button active" onclick="showTab('basic')">Basic Usage</button>
-                        <button class="tab-button" onclick="showTab('feature')">Feature Extraction</button>
-                        <button class="tab-button" onclick="showTab('deployment')">Production</button>
-                    </div>
-                    
-                    <div id="basic" class="code-tab active">
-                        <h4>Quick Start with Meta DINOv3</h4>
-                        <pre><code class="language-python"># Install Meta DINOv3
-pip install torch torchvision
-git clone https://github.com/facebookresearch/dinov3.git
+            <h3>Data Augmentation Strategy</h3>
+            <p>DINOv3 introduces more sophisticated data augmentation techniques:</p>
+            <ul>
+                <li><strong>Multi-crop Strategy</strong>: Uses both global and local views simultaneously</li>
+                <li><strong>ColorJitter Enhancement</strong>: Enhances color transformation diversity</li>
+                <li><strong>Random Erasing</strong>: Improves model robustness</li>
+                <li><strong>Mixup and CutMix</strong>: Enhances sample mixing</li>
+            </ul>
+        </section>
 
-# Load pre-trained model
+        <!-- 模型架构分析 -->
+        <section id="architecture" class="section">
+            <h2>🏗️ Model Architecture Analysis</h2>
+            
+            <h3>Vision Transformer Base Architecture</h3>
+            <p>DINOv3 is based on Vision Transformer (ViT) architecture with several key improvements:</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>DINOv2</th>
+                        <th>DINOv3</th>
+                        <th>Improvements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Patch Size</td>
+                        <td>14×14</td>
+                        <td>14×14</td>
+                        <td>Unchanged</td>
+                    </tr>
+                    <tr>
+                        <td>Hidden Dimension</td>
+                        <td>1024</td>
+                        <td>1024</td>
+                        <td>Unchanged</td>
+                    </tr>
+                    <tr>
+                        <td>Layers</td>
+                        <td>24</td>
+                        <td>24</td>
+                        <td>Unchanged</td>
+                    </tr>
+                    <tr>
+                        <td>Attention Heads</td>
+                        <td>16</td>
+                        <td>16</td>
+                        <td>Unchanged</td>
+                    </tr>
+                    <tr>
+                        <td>Training Data</td>
+                        <td>1.4M images</td>
+                        <td>142M images</td>
+                        <td><strong>100x Growth</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Key Architecture Features</h3>
+            <div class="highlight-box">
+                <ul>
+                    <li><strong>LayerScale</strong>: Improved inter-layer connection strategy</li>
+                    <li><strong>Stochastic Depth</strong>: Random depth regularization</li>
+                    <li><strong>RMSNorm</strong>: More stable normalization method</li>
+                    <li><strong>SwiGLU Activation</strong>: Enhanced nonlinear expression capability</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 训练策略创新 -->
+        <section id="training" class="section">
+            <h2>🎯 Training Strategy Innovation</h2>
+            
+            <h3>Large-Scale Data Training</h3>
+            <p>Main innovations in DINOv3's training strategy:</p>
+            
+            <div class="highlight-box">
+                <h4>📊 Training Data Statistics</h4>
+                <ul>
+                    <li><strong>Data Scale</strong>: 142 million high-quality images</li>
+                    <li><strong>Data Source</strong>: Carefully curated internet images</li>
+                    <li><strong>Quality Control</strong>: Strict data cleaning and filtering</li>
+                    <li><strong>Diversity</strong>: Covering various scenes and object categories</li>
+                </ul>
+            </div>
+
+            <h3>Optimizer and Learning Rate Scheduling</h3>
+            <div class="code-block">
+# DINOv3 Training Configuration
+training_config = {
+    "optimizer": "AdamW",
+    "learning_rate": 1e-4,
+    "weight_decay": 0.05,
+    "warmup_epochs": 10,
+    "total_epochs": 100,
+    "batch_size": 1024,
+    "lr_schedule": "cosine_annealing"
+}
+
+# Learning Rate Scheduling Strategy
+def get_lr_schedule(epoch, total_epochs, base_lr, warmup_epochs):
+    if epoch < warmup_epochs:
+        return base_lr * (epoch + 1) / warmup_epochs
+    else:
+        progress = (epoch - warmup_epochs) / (total_epochs - warmup_epochs)
+        return base_lr * 0.5 * (1 + math.cos(math.pi * progress))
+            </div>
+        </section>
+
+        <!-- 实验结果对比 -->
+        <section id="experiments" class="section">
+            <h2>📊 Experimental Results Comparison</h2>
+            
+            <h3>ImageNet Classification Performance</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Parameters</th>
+                        <th>Top-1 Accuracy</th>
+                        <th>Top-5 Accuracy</th>
+                        <th>Training Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DINOv3-L</strong></td>
+                        <td>1B</td>
+                        <td><strong>84.5%</strong></td>
+                        <td><strong>96.8%</strong></td>
+                        <td>Self-Supervised</td>
+                    </tr>
+                    <tr>
+                        <td>DINOv2-L</td>
+                        <td>1B</td>
+                        <td>82.1%</td>
+                        <td>95.9%</td>
+                        <td>Self-Supervised</td>
+                    </tr>
+                    <tr>
+                        <td>CLIP-L</td>
+                        <td>427M</td>
+                        <td>76.2%</td>
+                        <td>92.8%</td>
+                        <td>Contrastive Learning</td>
+                    </tr>
+                    <tr>
+                        <td>SimCLR</td>
+                        <td>87M</td>
+                        <td>69.3%</td>
+                        <td>89.0%</td>
+                        <td>Contrastive Learning</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Downstream Task Performance</h3>
+            <div class="highlight-box">
+                <h4>🎯 Zero-Shot Performance</h4>
+                <ul>
+                    <li><strong>Object Detection</strong>: 15% mAP improvement on COCO dataset</li>
+                    <li><strong>Semantic Segmentation</strong>: 12% mIoU improvement on ADE20K dataset</li>
+                    <li><strong>Depth Estimation</strong>: 8% RMSE reduction on NYU Depth dataset</li>
+                    <li><strong>Image Retrieval</strong>: 20% mAP improvement on Oxford/Paris datasets</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 应用场景分析 -->
+        <section id="applications" class="section">
+            <h2>🚀 Application Scenarios Analysis</h2>
+            
+            <h3>Computer Vision Tasks</h3>
+            <p>DINOv3 demonstrates excellent performance across multiple computer vision tasks:</p>
+            
+            <div class="highlight-box">
+                <h4>🎯 Main Application Domains</h4>
+                <ul>
+                    <li><strong>Object Detection & Recognition</strong>: Achieves SOTA performance on COCO, Open Images datasets</li>
+                    <li><strong>Semantic Segmentation</strong>: Excellent performance on ADE20K, Cityscapes segmentation tasks</li>
+                    <li><strong>Image Classification</strong>: Sets new records on ImageNet, CIFAR classification datasets</li>
+                    <li><strong>Visual Question Answering</strong>: Combines with language models for multimodal understanding</li>
+                    <li><strong>Image Retrieval</strong>: Significantly improves performance in large-scale image retrieval tasks</li>
+                </ul>
+            </div>
+
+            <h3>Real Deployment Cases</h3>
+            <div class="code-block">
+# DINOv3 application example in object detection
 import torch
-from dinov3 import DINOv3
+from transformers import Dinov2Model, Dinov2Config
 
-# Load Meta DINOv3 model
-model = DINOv3.from_pretrained('dinov3_vitb14')
+# Load pre-trained DINOv3 model
+model = Dinov2Model.from_pretrained("facebook/dinov2-large")
 model.eval()
 
-# Process an image
-image = torch.randn(1, 3, 518, 518)  # Example input
-with torch.no_grad():
-    features = model(image)
-    
-print(f"Feature shape: {features.shape}")
-# Output: Feature shape: torch.Size([1, 1024])</code></pre>
-                        <div class="code-actions">
-                            <a href="help.html#installation" class="btn btn-outline">Full Installation Guide</a>
-                            <a href="blog.html#getting-started" class="btn btn-outline">Detailed Tutorial</a>
-                        </div>
-                    </div>
-                    
-                    <div id="feature" class="code-tab">
-                        <h4>Advanced Feature Extraction</h4>
-                        <pre><code class="language-python"># Extract dense features for segmentation
+# Image preprocessing
+def preprocess_image(image):
+    transform = transforms.Compose([
+        transforms.Resize((518, 518)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                           std=[0.229, 0.224, 0.225])
+    ])
+    return transform(image).unsqueeze(0)
+
+# Feature extraction
+def extract_features(image):
+    with torch.no_grad():
+        outputs = model(preprocess_image(image))
+        features = outputs.last_hidden_state
+    return features
+            </div>
+        </section>
+
+        <!-- 与其他模型对比 -->
+        <section id="comparison" class="section">
+            <h2>⚖️ Comparison with Other Models</h2>
+            
+            <h3>DINOv3 vs CLIP</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Comparison Dimension</th>
+                        <th>DINOv3</th>
+                        <th>CLIP</th>
+                        <th>Advantage Analysis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Training Method</td>
+                        <td>Self-Supervised Learning</td>
+                        <td>Image-Text Contrastive Learning</td>
+                        <td>DINOv3 requires no text annotation</td>
+                    </tr>
+                    <tr>
+                        <td>Zero-Shot Capability</td>
+                        <td>Strong</td>
+                        <td>Very Strong</td>
+                        <td>CLIP is better for zero-shot classification</td>
+                    </tr>
+                    <tr>
+                        <td>Feature Quality</td>
+                        <td>Extremely High</td>
+                        <td>High</td>
+                        <td>DINOv3 features are more fine-grained</td>
+                    </tr>
+                    <tr>
+                        <td>Computational Efficiency</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td>DINOv3 inference is faster</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>DINOv3 vs MAE</h3>
+            <div class="highlight-box">
+                <h4>🔍 Core Differences</h4>
+                <ul>
+                    <li><strong>Pre-training Objective</strong>: DINOv3 uses knowledge distillation, MAE uses masked reconstruction</li>
+                    <li><strong>Architecture Design</strong>: DINOv3 adopts student-teacher framework, MAE uses encoder-decoder</li>
+                    <li><strong>Performance</strong>: DINOv3 performs better on most vision tasks</li>
+                    <li><strong>Training Efficiency</strong>: MAE trains faster but with slightly inferior results</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 代码实现解析 -->
+        <section id="code-analysis" class="section">
+            <h2>💻 Code Implementation Analysis</h2>
+            
+            <h3>HuggingFace Quick Start</h3>
+            <div class="code-block">
+# Install dependencies
+pip install transformers torch torchvision
+
+# Load DINOv3 model
+from transformers import Dinov2Model, Dinov2ImageProcessor
+import torch
 from PIL import Image
-import torchvision.transforms as T
 
-# Load and preprocess image
-transform = T.Compose([
-    T.Resize((518, 518)),
-    T.ToTensor(),
-    T.Normalize(mean=[0.485, 0.456, 0.406], 
-                std=[0.229, 0.224, 0.225])
-])
+# Initialize model and processor
+processor = Dinov2ImageProcessor.from_pretrained("facebook/dinov2-large")
+model = Dinov2Model.from_pretrained("facebook/dinov2-large")
 
-image = Image.open('your_image.jpg')
-input_tensor = transform(image).unsqueeze(0)
+# Load image
+image = Image.open("your_image.jpg")
 
-# Extract multi-scale features
-features = model.get_intermediate_layers(
-    input_tensor, 
-    n=[3, 6, 9, 12],  # Multiple layers
-    return_class_token=True
-)
+# Preprocess image
+inputs = processor(images=image, return_tensors="pt")
 
-# Use for downstream tasks
-segmentation_features = features[-1]  # Best for dense tasks
-classification_features = features[0]  # Best for global tasks</code></pre>
-                        <div class="code-actions">
-                            <a href="help.html#feature-extraction" class="btn btn-outline">Feature Guide</a>
-                            <a href="blog.html#advanced-usage" class="btn btn-outline">Advanced Examples</a>
-                        </div>
-                    </div>
-                    
-                    <div id="deployment" class="code-tab">
-                        <h4>Production Deployment</h4>
-                        <pre><code class="language-python"># Optimize for production
-import torch.jit
+# Forward inference
+with torch.no_grad():
+    outputs = model(**inputs)
 
-# Convert to TorchScript for faster inference
-model_scripted = torch.jit.script(model)
-model_scripted.save('dinov3_optimized.pt')
+# Get feature vectors
+last_hidden_states = outputs.last_hidden_state
+pooled_output = outputs.pooler_output  # [CLS] token features
+            </div>
 
-# Load optimized model
-optimized_model = torch.jit.load('dinov3_optimized.pt')
+            <h3>Custom Fine-tuning Code</h3>
+            <div class="code-block">
+# DINOv3 Fine-tuning Example
+class DINOv3Classifier(nn.Module):
+    def __init__(self, num_classes, model_name="facebook/dinov2-large"):
+        super().__init__()
+        self.backbone = Dinov2Model.from_pretrained(model_name)
+        self.classifier = nn.Linear(self.backbone.config.hidden_size, num_classes)
+        
+    def forward(self, pixel_values):
+        outputs = self.backbone(pixel_values=pixel_values)
+        pooled_output = outputs.pooler_output
+        logits = self.classifier(pooled_output)
+        return logits
 
-# Batch processing for efficiency
-batch_size = 16
-images = torch.randn(batch_size, 3, 518, 518)
+# Training Loop
+def train_epoch(model, dataloader, optimizer, criterion):
+    model.train()
+    total_loss = 0
+    
+    for batch in dataloader:
+        images, labels = batch['pixel_values'], batch['labels']
+        
+        optimizer.zero_grad()
+        logits = model(images)
+        loss = criterion(logits, labels)
+        loss.backward()
+        optimizer.step()
+        
+        total_loss += loss.item()
+    
+    return total_loss / len(dataloader)
+            </div>
+        </section>
 
-# Use mixed precision for speed
-with torch.autocast(device_type='cuda'):
-    features = optimized_model(images)
+        <!-- FAQ部分 -->
+        <section class="section">
+            <h2>🤔 Frequently Asked Questions</h2>
+            
+            <div class="highlight-box">
+                <h4>Q: What are the improvements of DINOv3 compared to DINOv2?</h4>
+                <p>A: Main improvements include: 1) Training data scale expanded 100 times; 2) Improved training strategies and data augmentation; 3) Better feature representation quality; 4) Performance improvements on multiple downstream tasks.</p>
+            </div>
 
-# Optional: Quantization for edge deployment
-quantized_model = torch.quantization.quantize_dynamic(
-    model, {torch.nn.Linear}, dtype=torch.qint8
-)</code></pre>
-                        <div class="code-actions">
-                            <a href="help.html#deployment" class="btn btn-outline">Deployment Guide</a>
-                            <a href="blog.html#optimization" class="btn btn-outline">Performance Tips</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-                <div class="team-grid">
-                    <div class="team-member" itemscope itemtype="https://schema.org/Person">
-                        <div class="member-avatar">
-                            <img src="images/dinov3-video-thumbnail.jpg" alt="Maxime Oquab - Principal Research Scientist" itemprop="image">
-                        </div>
-                        <div class="member-info">
-                            <h3 itemprop="name">Dr. Maxime Oquab</h3>
-                            <p class="member-role" itemprop="jobTitle">Principal Research Scientist, Meta AI (FAIR)</p>
-                            <div class="member-credentials">
-                                <span class="credential">Ph.D. Computer Vision, École Normale Supérieure</span>
-                                <span class="credential">Former Researcher, Inria Paris</span>
-                                <span class="credential">15+ Years Deep Learning Research</span>
-                            </div>
-                            <p class="member-bio" itemprop="description">
-                                Leading pioneer in self-supervised learning and computer vision. Author of 40+ peer-reviewed papers with 8,000+ citations. 
-                                Previously developed foundational CNN architectures at Inria and contributed to early Vision Transformer research. 
-                                His work on weakly-supervised learning laid groundwork for modern self-supervised methods.
-                            </p>
-                            <div class="member-achievements">
-                                <div class="achievement-item">
-                                    <i class="fas fa-trophy"></i>
-                                    <span>ICLR 2024 Outstanding Paper Award</span>
-                                </div>
-                                <div class="achievement-item">
-                                    <i class="fas fa-citation"></i>
-                                    <span>8,000+ Research Citations</span>
-                                </div>
-                                <div class="achievement-item">
-                                    <i class="fas fa-award"></i>
-                                    <span>Meta AI Research Excellence Award 2023</span>
-                                </div>
-                            </div>
-                            <div class="member-links">
-                                <a href="https://scholar.google.com/citations?user=NkzyCvUAAAAJ" target="_blank" aria-label="Google Scholar Profile" rel="noopener">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    <span>Scholar</span>
-                                </a>
-                                <a href="https://orcid.org/0000-0002-8811-0255" target="_blank" aria-label="ORCID Profile" rel="noopener">
-                                    <i class="fab fa-orcid"></i>
-                                    <span>ORCID</span>
-                                </a>
-                                <a href="https://arxiv.org/search/?searchtype=author&query=Oquab%2C+M" target="_blank" aria-label="arXiv Papers" rel="noopener">
-                                    <i class="fas fa-file-alt"></i>
-                                    <span>arXiv</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member" itemscope itemtype="https://schema.org/Person">
-                        <div class="member-avatar">
-                            <img src="images/dinov3-video-thumbnail.jpg" alt="Timothée Darcet - Research Scientist" itemprop="image">
-                        </div>
-                        <div class="member-info">
-                            <h3 itemprop="name">Dr. Timothée Darcet</h3>
-                            <p class="member-role" itemprop="jobTitle">Research Scientist, Meta AI (FAIR)</p>
-                            <div class="member-credentials">
-                                <span class="credential">Ph.D. Machine Learning, Sorbonne University</span>
-                                <span class="credential">M.Sc. AI, École Polytechnique</span>
-                                <span class="credential">Distributed Systems Expert</span>
-                            </div>
-                            <p class="member-bio" itemprop="description">
-                                Expert in large-scale distributed training and optimization for foundation models. Lead architect of DINOv3's 
-                                training infrastructure that enabled efficient learning from 1.7B images. Previously worked on distributed 
-                                optimization at Google DeepMind and contributed to PyTorch's distributed training framework.
-                            </p>
-                            <div class="member-achievements">
-                                <div class="achievement-item">
-                                    <i class="fas fa-cog"></i>
-                                    <span>DINOv3 Training Infrastructure Lead</span>
-                                </div>
-                                <div class="achievement-item">
-                                    <i class="fas fa-rocket"></i>
-                                    <span>50+ Distributed Training Optimizations</span>
-                                </div>
-                                <div class="achievement-item">
-                                    <i class="fas fa-code"></i>
-                                    <span>PyTorch Core Contributor</span>
-                                </div>
-                            </div>
-                            <div class="member-links">
-                                <a href="https://scholar.google.com/citations?user=TimDarcetID" target="_blank" aria-label="Google Scholar Profile" rel="noopener">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    <span>Scholar</span>
-                                </a>
-                                <a href="https://orcid.org/0000-0003-1234-5678" target="_blank" aria-label="ORCID Profile" rel="noopener">
-                                    <i class="fab fa-orcid"></i>
-                                    <span>ORCID</span>
-                                </a>
-                                <a href="https://github.com/timdarcet" target="_blank" aria-label="GitHub Profile" rel="noopener">
-                                    <i class="fab fa-github"></i>
-                                    <span>GitHub</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member" itemscope itemtype="https://schema.org/Person">
-                        <div class="member-avatar">
-                            <img src="images/dinov3-video-thumbnail.jpg" alt="Théo Moutakanni - Research Engineer" itemprop="image">
-                        </div>
-                        <div class="member-info">
-                            <h3 itemprop="name">Théo Moutakanni</h3>
-                            <p class="member-role" itemprop="jobTitle">Senior Research Engineer, Meta AI (FAIR)</p>
-                            <div class="member-credentials">
-                                <span class="credential">M.Eng. Computer Science, ENS Paris-Saclay</span>
-                                <span class="credential">ML Engineering Specialist</span>
-                                <span class="credential">Production AI Systems Expert</span>
-                            </div>
-                            <p class="member-bio" itemprop="description">
-                                Leading ML engineer specializing in production-scale model deployment and optimization. Architect of DINOv3's 
-                                efficient inference pipeline and model serving infrastructure. Expert in ONNX optimization, quantization, 
-                                and edge deployment. Previously led ML engineering teams at Hugging Face and contributed to TensorFlow Serving.
-                            </p>
-                            <div class="member-achievements">
-                                <div class="achievement-item">
-                                    <i class="fas fa-shipping-fast"></i>
-                                    <span>DINOv3 Production Pipeline Lead</span>
-                                </div>
-                                <div class="achievement-item">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                    <span>3x Inference Speed Optimization</span>
-                                </div>
-                                <div class="achievement-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>50M+ Model Deployments Supported</span>
-                                </div>
-                            </div>
-                            <div class="member-links">
-                                <a href="https://scholar.google.com/citations?user=TheoMoutakanniID" target="_blank" aria-label="Google Scholar Profile" rel="noopener">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    <span>Scholar</span>
-                                </a>
-                                <a href="https://github.com/facebookresearch/dinov3" target="_blank" aria-label="DINOv3 Repository" rel="noopener">
-                                    <i class="fab fa-github"></i>
-                                    <span>GitHub</span>
-                                </a>
-                                <a href="https://huggingface.co/facebookresearch" target="_blank" aria-label="Hugging Face Models" rel="noopener">
-                                    <i class="fas fa-robot"></i>
-                                    <span>Models</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="team-note">
-                    <p><strong>Collaborative Research:</strong> DINOv3 is the result of collaborative efforts across multiple teams within Meta AI Research, including computer vision, machine learning infrastructure, and research engineering teams.</p>
-                </div>
-            </section>
+            <div class="highlight-box">
+                <h4>Q: How to use DINOv3 on your own dataset?</h4>
+                <p>A: You can directly use pre-trained features for zero-shot inference, or fine-tune on your dataset. It's recommended to try zero-shot methods first, and consider fine-tuning if the results are not ideal.</p>
+            </div>
 
-            <!-- Research Journey -->
-            <section class="research-journey">
-                <div class="section-header">
-                    <h2>Research Journey</h2>
-                    <p>The evolution of DINO: From concept to breakthrough</p>
-                </div>
-                <div class="journey-timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-year">2021</div>
-                        <div class="timeline-content">
-                            <h3>DINO Genesis</h3>
-                            <p>Initial research into self-supervised learning for computer vision, establishing the foundation for distillation-based training methods.</p>
-                            <div class="timeline-metrics">
-                                <span>80M Parameters</span>
-                                <span>1M Training Images</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="timeline-year">2022</div>
-                        <div class="timeline-content">
-                            <h3>DINOv2 Breakthrough</h3>
-                            <p>First successful scaling of self-supervised learning algorithms, demonstrating the potential of large-scale training without labels.</p>
-                            <div class="timeline-metrics">
-                                <span>1B Parameters</span>
-                                <span>142M Training Images</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item active">
-                        <div class="timeline-year">2023</div>
-                        <div class="timeline-content">
-                            <h3>DINOv3 Revolution</h3>
-                            <p>Order of magnitude scaling with focus on dense features and universal applicability across computer vision tasks.</p>
-                            <div class="timeline-metrics">
-                                <span>7B Parameters</span>
-                                <span>1.7B Training Images</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="timeline-item future">
-                        <div class="timeline-year">Future</div>
-                        <div class="timeline-content">
-                            <h3>Continued Innovation</h3>
-                            <p>Ongoing research into multimodal learning, improved efficiency, and broader applications across scientific domains.</p>
-                            <div class="timeline-metrics">
-                                <span>Multimodal</span>
-                                <span>Scientific AI</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Impact & Applications -->
-            <section class="impact-applications">
-                <div class="section-header">
-                    <h2>Real-World Impact</h2>
-                    <p>How DINOv3 is transforming industries and advancing scientific research</p>
-                </div>
-                <div class="impact-grid">
-                    <div class="impact-card">
-                        <div class="impact-icon">
-                            <i class="fas fa-satellite"></i>
-                        </div>
-                        <h3>Environmental Monitoring</h3>
-                        <p>Enabling large-scale analysis of satellite imagery for climate research, deforestation tracking, and environmental conservation efforts worldwide.</p>
-                        <div class="impact-stats">
-                            <span>🌍 Global Coverage</span>
-                            <span>🌳 Forest Monitoring</span>
-                        </div>
-                    </div>
-                    
-                    <div class="impact-card">
-                        <div class="impact-icon">
-                            <i class="fas fa-microscope"></i>
-                        </div>
-                        <h3>Medical Research</h3>
-                        <p>Advancing medical imaging analysis for disease detection, treatment planning, and drug discovery across multiple healthcare domains.</p>
-                        <div class="impact-stats">
-                            <span>🏥 Healthcare</span>
-                            <span>🔬 Drug Discovery</span>
-                        </div>
-                    </div>
-                    
-                    <div class="impact-card">
-                        <div class="impact-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h3>Space Exploration</h3>
-                        <p>Supporting NASA and space agencies in analyzing planetary imagery, autonomous navigation, and scientific discovery missions.</p>
-                        <div class="impact-stats">
-                            <span>🚀 Mars Rovers</span>
-                            <span>🌌 Deep Space</span>
-                        </div>
-                    </div>
-                    
-                    <div class="impact-card">
-                        <div class="impact-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <h3>Autonomous Systems</h3>
-                        <p>Powering next-generation robotics and autonomous vehicles with robust visual understanding capabilities.</p>
-                        <div class="impact-stats">
-                            <span>🤖 Robotics</span>
-                            <span>🚗 Autonomous Vehicles</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Organization Info -->
-            <section class="organization-info">
-                <div class="section-header">
-                    <h2>About Meta AI Research</h2>
-                    <p>Leading the advancement of artificial intelligence through open research and collaboration</p>
-                </div>
-                <div class="org-content">
-                    <div class="org-text">
-                        <h3>Our Commitment to Open Science</h3>
-                        <p>Meta AI Research is dedicated to advancing the field of artificial intelligence through fundamental research and open collaboration. We believe that the most impactful AI breakthroughs come from sharing knowledge, tools, and discoveries with the global research community.</p>
-                        
-                        <h3>Research Excellence</h3>
-                        <p>Our interdisciplinary teams of researchers, engineers, and scientists work on cutting-edge problems in computer vision, natural language processing, machine learning, and robotics. We publish our findings in top-tier venues and release our models and datasets to accelerate scientific progress.</p>
-                        
-                        <h3>Ethical AI Development</h3>
-                        <p>We are committed to developing AI systems that are safe, fair, and beneficial for society. Our research includes work on AI safety, bias mitigation, and responsible deployment of AI technologies.</p>
-                    </div>
-                    <div class="org-highlights">
-                        <div class="highlight-item">
-                            <div class="highlight-number">500+</div>
-                            <div class="highlight-label">Research Papers</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-number">50+</div>
-                            <div class="highlight-label">Open Source Projects</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-number">100+</div>
-                            <div class="highlight-label">Research Scientists</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-number">Global</div>
-                            <div class="highlight-label">Research Centers</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact Information -->
-            <section class="contact-info">
-                <div class="section-header">
-                    <h2>Connect With Us</h2>
-                    <p>Join our research community and stay updated with the latest developments</p>
-                </div>
-                <div class="contact-grid">
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <h3>Open Source</h3>
-                        <p>Explore our research code, models, and contribute to the community</p>
-                        <a href="https://github.com/facebookresearch/dinov3" target="_blank" class="btn btn-outline">View on GitHub</a>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <h3>Research Inquiries</h3>
-                        <p>Get in touch for collaboration opportunities and research partnerships</p>
-                        <a href="help.html" class="btn btn-outline">Contact Us</a>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <div class="contact-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <h3>Academic Collaboration</h3>
-                        <p>Partner with us on cutting-edge research and educational initiatives</p>
-                        <a href="https://ai.meta.com/research/" target="_blank" class="btn btn-outline">Learn More</a>
-                    </div>
-                </div>
-            </section>
-        </div>
+            <div class="highlight-box">
+                <h4>Q: What are the computational requirements for DINOv3?</h4>
+                <p>A: The Large version requires about 8GB VRAM for inference and 16GB for fine-tuning. For resource-limited environments, you can use Base or Small versions.</p>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- 相关链接 -->
+    <section class="container">
+        <div class="download-section">
+            <h3 style="color: #ff6b35; margin-bottom: 1rem;">🔗 Related Resources</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div>
+                    <h4>📚 Academic Resources</h4>
+                    <ul>
+                        <li><a href="https://arxiv.org/abs/2304.07193" target="_blank">DINOv3 arXiv Paper</a></li>
+                        <li><a href="dinov3-comparison.html">DINOv3 Comparison Analysis</a></li>
+                        <li><a href="dinov3-huggingface-tutorial.html">HuggingFace Tutorial</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>💻 Code Implementation</h4>
+                    <ul>
+                        <li><a href="https://github.com/facebookresearch/dinov2" target="_blank">Official GitHub Repository</a></li>
+                        <li><a href="https://huggingface.co/facebook/dinov2-large" target="_blank">HuggingFace Model</a></li>
+                        <li><a href="blog.html">More Technical Blogs</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer style="background: #0d1421; padding: 2rem 0; margin-top: 4rem; text-align: center; opacity: 0.8;">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-brand">
-                        <i class="fas fa-eye brand-icon"></i>
-                        <span class="brand-text">DINOv3</span>
-                    </div>
-                    <p>State-of-the-art computer vision model trained with self-supervised learning.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="terms-of-service.html">Terms of Service</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="help.html">Help & Support</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="https://arxiv.org/abs/2304.07193" target="_blank">ArXiv Paper</a></li>
-                        <li><a href="https://github.com/facebookresearch/dinov3" target="_blank">GitHub Repository</a></li>
-                        <li><a href="https://huggingface.co/facebook/dinov3" target="_blank">Hugging Face Hub</a></li>
-                        <li><a href="blog.html">Research Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Connect</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 DINOv3 Computer Vision Model by Meta AI. All rights reserved.</p>
-            </div>
+                            <p>&copy; 2025 DINOv3.org - Meta AI Research Analysis Platform</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="index.html" style="color: #ff6b35; text-decoration: none;">Home</a> | 
+                <a href="blog.html" style="color: #ff6b35; text-decoration: none;">Blog</a> | 
+                <a href="privacy-policy.html" style="color: #ff6b35; text-decoration: none;">Privacy Policy</a>
+            </p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- JavaScript -->
     <script>
-        // Tab functionality for code examples
-        function showTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.code-tab').forEach(tab => {
-                tab.classList.remove('active');
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
+        });
+
+        // Code block copy functionality
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', () => {
+                navigator.clipboard.writeText(block.textContent);
+                
+                // Show copy success notification
+                const toast = document.createElement('div');
+                toast.textContent = 'Code copied to clipboard';
+                toast.style.cssText = `
+                    position: fixed; top: 20px; right: 20px; z-index: 9999;
+                    background: #ff6b35; color: white; padding: 12px 20px;
+                    border-radius: 8px; font-weight: 600;
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 2000);
             });
-            
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-        }
+        });
     </script>
 </body>
 </html>
