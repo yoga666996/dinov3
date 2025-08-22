@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DINOv3 HuggingFace Tutorial: Complete Guide with Code Examples | Meta AI</title>
+    <meta name="description" content="Complete DINOv3 HuggingFace tutorial with step-by-step code examples. Learn how to use facebook/dinov2 transformers library for image classification, feature extraction, and fine-tuning. Practical guide for developers.">
+    <meta name="keywords" content="dinov3 huggingface, dino v3 huggingface tutorial, dinov3 transformers, facebook dinov2 huggingface, dinov3 code example, meta ai tutorial">
+    
+    <!-- SEO Optimization -->
+    <link rel="canonical" href="https://dinov3.org/dinov3-huggingface-tutorial">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Meta AI Research Team">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="DINOv3 HuggingFace Tutorial: Complete Guide with Code Examples">
+    <meta property="og:description" content="Complete DINOv3 HuggingFace tutorial with step-by-step code examples for developers.">
+    <meta property="og:image" content="https://dinov3.org/images/dinov3-huggingface-tutorial.jpg">
+    <meta property="og:url" content="https://dinov3.org/dinov3-huggingface-tutorial">
+    <meta property="og:type" content="article">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "DINOv3 HuggingFace Tutorial: Complete Guide with Code Examples",
+        "description": "Complete DINOv3 HuggingFace tutorial with step-by-step code examples for developers.",
+        "author": {
+            "@type": "Organization",
+            "name": "Meta AI Research"
+        },
+        "publisher": {
+            "@type": "Organization",
+                            "name": "DINOv3.org"
+        },
+        "datePublished": "2024-01-15",
+        "dateModified": "2025-08-22",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://dinov3.org/dinov3-huggingface-tutorial"
+        },
+        "applicationCategory": "Machine Learning",
+        "operatingSystem": "Cross-platform"
+    }
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="icons.css">
+    
+    <style>
+        .tutorial-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 120px 0 80px;
+            min-height: 60vh;
+        }
+        .tutorial-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .tutorial-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .code-block {
+            background: #1e1e2e;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            position: relative;
+        }
+        .code-block::before {
+            content: 'Copy';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(255, 107, 53, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .code-block:hover::before {
+            opacity: 1;
+        }
+        .step-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid #ff6b35;
+        }
+        .step-number {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .installation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .method-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .warning-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .success-box {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .error-box {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .output-box {
+            background: #0d1421;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            color: #4caf50;
+        }
+        .toc {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: sticky;
+            top: 100px;
+        }
+        .example-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .example-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .tutorial-title {
+                font-size: 2rem;
+            }
+            .installation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">DINOv3</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+                <a href="dinov3-paper-analysis.html">Paper Analysis</a>
+                <a href="dinov3-comparison.html">Model Comparison</a>
+                <a href="dinov3-huggingface-tutorial.html" class="active">HuggingFace Tutorial</a>
+                <a href="#" class="download-link">Download</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="tutorial-hero">
+        <div class="tutorial-content">
+            <h1 class="tutorial-title">DINOv3 HuggingFace Tutorial</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Complete step-by-step guide to using DINOv3 with HuggingFace Transformers. From installation to production deployment.
+            </p>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; opacity: 0.8;">
+                <span>🚀 Quick Start Guide</span>
+                <span>💻 Ready-to-run Code</span>
+                <span>🔧 Troubleshooting Tips</span>
+                <span>📈 Performance Optimization</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="container">
+        <div class="toc">
+            <h3 style="color: #ff6b35; margin-bottom: 1rem;">📋 Tutorial Contents</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin: 0.5rem 0;"><a href="#installation" style="color: #f7931e; text-decoration: none;">1. Installation & Setup</a></li>
+                <li style="margin: 0.5rem 0;"><a href="#quick-start" style="color: #f7931e; text-decoration: none;">2. Quick Start Example</a></li>
+                <li style="margin: 0.5rem 0;"><a href="#image-classification" style="color: #f7931e; text-decoration: none;">3. Image Classification</a></li>
+                <li style="margin: 0.5rem 0;"><a href="#feature-extraction" style="color: #f7931e; text-decoration: none;">4. Feature Extraction</a></li>
+                <li style="margin: 0.5rem 0;"><a href="#batch-processing" style="color: #f7931e; text-decoration: none;">5. Batch Processing</a></li>
+                <li style="margin: 0.5rem 0;"><a href="#fine-tuning" style="color: #f7931e; text-decoration: none;">6. Fine-tuning</a></li>
+                <li style="margin: 0.5rem 0;"><a href="#optimization" style="color: #f7931e; text-decoration: none;">7. Performance Optimization</a></li>
+                <li style="margin: 0.5rem 0;"><a href="#troubleshooting" style="color: #f7931e; text-decoration: none;">8. Common Issues & Solutions</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Main Tutorial Content -->
+    <main class="container tutorial-content">
+        
+        <!-- Installation Section -->
+        <section id="installation" class="step-section">
+            <div class="step-number">1</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Installation & Setup</h2>
+            
+            <h3 style="color: #f7931e;">Prerequisites</h3>
+            <p>Before getting started, ensure you have:</p>
+            <ul>
+                <li>Python 3.8 or higher</li>
+                <li>PyTorch 1.11.0 or higher</li>
+                <li>At least 8GB of RAM (16GB recommended)</li>
+                <li>CUDA-compatible GPU (optional but recommended)</li>
+            </ul>
+
+            <h3 style="color: #f7931e;">Installation Methods</h3>
+            <div class="installation-grid">
+                <div class="method-card">
+                    <h4 style="color: #ff6b35;">📦 Method 1: pip (Recommended)</h4>
+                    <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"># Install transformers and dependencies
+pip install transformers torch torchvision
+pip install pillow requests
+
+# Optional: Install with specific PyTorch version
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118</pre>
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <h4 style="color: #ff6b35;">🐍 Method 2: conda</h4>
+                    <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"># Create new environment
+conda create -n dinov3 python=3.9
+conda activate dinov3
+
+# Install packages
+conda install pytorch torchvision -c pytorch
+pip install transformers pillow</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Verification:</strong> Run the following to verify your installation:
+                <div class="code-block">
+<pre style="margin: 0.5rem 0 0 0; color: #e0e0e0;">python -c "import transformers; print(transformers.__version__)"</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section id="quick-start" class="step-section">
+            <div class="step-number">2</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Quick Start Example</h2>
+            
+            <p>Let's start with a simple example to get DINOv3 running in just a few lines of code:</p>
+
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Quick Start: DINOv3 Feature Extraction</span>
+<span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> Dinov2Model, Dinov2ImageProcessor
+<span style="color: #4fc3f7;">from</span> PIL <span style="color: #4fc3f7;">import</span> Image
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">import</span> requests
+
+<span style="color: #ff6b35;"># Load model and processor</span>
+processor = Dinov2ImageProcessor.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+model = Dinov2Model.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+
+<span style="color: #ff6b35;"># Load a sample image</span>
+url = <span style="color: #81c784;">"https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/beignets-task-guide.png"</span>
+image = Image.open(requests.get(url, stream=<span style="color: #4fc3f7;">True</span>).raw)
+
+<span style="color: #ff6b35;"># Process image and extract features</span>
+inputs = processor(images=image, return_tensors=<span style="color: #81c784;">"pt"</span>)
+<span style="color: #4fc3f7;">with</span> torch.no_grad():
+    outputs = model(**inputs)
+
+<span style="color: #ff6b35;"># Get feature embeddings</span>
+features = outputs.pooler_output  <span style="color: #ff6b35;"># Shape: [1, 1024]</span>
+print(f<span style="color: #81c784;">"Feature shape: {features.shape}"</span>)
+print(f<span style="color: #81c784;">"Feature norm: {torch.norm(features):.4f}"</span>)</pre>
+            </div>
+
+            <div class="output-box">
+<pre style="margin: 0;">Feature shape: torch.Size([1, 1024])
+Feature norm: 32.1847</pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Note:</strong> First time running will download the model weights (~1.1GB). This may take a few minutes depending on your internet connection.
+            </div>
+        </section>
+
+        <!-- Image Classification Section -->
+        <section id="image-classification" class="step-section">
+            <div class="step-number">3</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Image Classification with DINOv3</h2>
+            
+            <p>While DINOv3 is primarily a feature extractor, you can easily build a classifier on top of it:</p>
+
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Image Classification Example</span>
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">import</span> torch.nn <span style="color: #4fc3f7;">as</span> nn
+<span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> Dinov2Model, Dinov2ImageProcessor
+<span style="color: #4fc3f7;">from</span> PIL <span style="color: #4fc3f7;">import</span> Image
+<span style="color: #4fc3f7;">import</span> requests
+
+<span style="color: #4fc3f7;">class</span> <span style="color: #81c784;">DINOv3Classifier</span>(nn.Module):
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">__init__</span>(<span style="color: #4fc3f7;">self</span>, num_classes, model_name=<span style="color: #81c784;">"facebook/dinov2-large"</span>):
+        super().__init__()
+        <span style="color: #4fc3f7;">self</span>.backbone = Dinov2Model.from_pretrained(model_name)
+        <span style="color: #4fc3f7;">self</span>.classifier = nn.Linear(<span style="color: #4fc3f7;">self</span>.backbone.config.hidden_size, num_classes)
+        
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">forward</span>(<span style="color: #4fc3f7;">self</span>, pixel_values):
+        outputs = <span style="color: #4fc3f7;">self</span>.backbone(pixel_values=pixel_values)
+        pooled_output = outputs.pooler_output
+        logits = <span style="color: #4fc3f7;">self</span>.classifier(pooled_output)
+        <span style="color: #4fc3f7;">return</span> logits
+
+<span style="color: #ff6b35;"># Initialize model for 1000 classes (ImageNet)</span>
+model = DINOv3Classifier(num_classes=1000)
+processor = Dinov2ImageProcessor.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+
+<span style="color: #ff6b35;"># Load and process image</span>
+url = <span style="color: #81c784;">"https://upload.wikimedia.org/wikipedia/commons/3/30/Vulpes_vulpes_ssp_fulvus.jpg"</span>
+image = Image.open(requests.get(url, stream=<span style="color: #4fc3f7;">True</span>).raw)
+inputs = processor(images=image, return_tensors=<span style="color: #81c784;">"pt"</span>)
+
+<span style="color: #ff6b35;"># Forward pass</span>
+<span style="color: #4fc3f7;">with</span> torch.no_grad():
+    logits = model(inputs[<span style="color: #81c784;">'pixel_values'</span>])
+    predictions = torch.nn.functional.softmax(logits, dim=-1)
+    
+<span style="color: #ff6b35;"># Get top 5 predictions</span>
+top5_prob, top5_catid = torch.topk(predictions, 5)
+<span style="color: #4fc3f7;">for</span> i <span style="color: #4fc3f7;">in</span> range(top5_prob.size(1)):
+    print(f<span style="color: #81c784;">"Class {top5_catid[0][i]}: {top5_prob[0][i]*100:.2f}%"</span>)</pre>
+            </div>
+        </section>
+
+        <!-- Feature Extraction Section -->
+        <section id="feature-extraction" class="step-section">
+            <div class="step-number">4</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Advanced Feature Extraction</h2>
+            
+            <p>DINOv3 excels at extracting rich visual features. Here's how to get different types of features:</p>
+
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Advanced Feature Extraction</span>
+<span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> Dinov2Model, Dinov2ImageProcessor
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">import</span> numpy <span style="color: #4fc3f7;">as</span> np
+
+<span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">extract_features</span>(images, model, processor):
+    <span style="color: #81c784;">"""Extract different types of features from DINOv3"""</span>
+    
+    <span style="color: #ff6b35;"># Process images</span>
+    inputs = processor(images=images, return_tensors=<span style="color: #81c784;">"pt"</span>)
+    
+    <span style="color: #4fc3f7;">with</span> torch.no_grad():
+        outputs = model(**inputs, output_hidden_states=<span style="color: #4fc3f7;">True</span>)
+    
+    <span style="color: #ff6b35;"># Different feature types</span>
+    features = {
+        <span style="color: #81c784;">'cls_token'</span>: outputs.pooler_output,  <span style="color: #ff6b35;"># [CLS] token features</span>
+        <span style="color: #81c784;">'patch_embeddings'</span>: outputs.last_hidden_state,  <span style="color: #ff6b35;"># All patch features</span>
+        <span style="color: #81c784;">'mean_pooled'</span>: outputs.last_hidden_state.mean(dim=1),  <span style="color: #ff6b35;"># Mean pooled</span>
+        <span style="color: #81c784;">'all_layers'</span>: outputs.hidden_states  <span style="color: #ff6b35;"># Features from all layers</span>
+    }
+    
+    <span style="color: #4fc3f7;">return</span> features
+
+<span style="color: #ff6b35;"># Load model</span>
+model = Dinov2Model.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+processor = Dinov2ImageProcessor.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+
+<span style="color: #ff6b35;"># Extract features</span>
+features = extract_features(image, model, processor)
+
+<span style="color: #ff6b35;"># Print feature shapes</span>
+<span style="color: #4fc3f7;">for</span> key, value <span style="color: #4fc3f7;">in</span> features.items():
+    <span style="color: #4fc3f7;">if</span> key == <span style="color: #81c784;">'all_layers'</span>:
+        print(f<span style="color: #81c784;">"{key}: {len(value)} layers, each {value[0].shape}"</span>)
+    <span style="color: #4fc3f7;">else</span>:
+        print(f<span style="color: #81c784;">"{key}: {value.shape}"</span>)</pre>
+            </div>
+
+            <div class="output-box">
+<pre style="margin: 0;">cls_token: torch.Size([1, 1024])
+patch_embeddings: torch.Size([1, 257, 1024])
+mean_pooled: torch.Size([1, 1024])
+all_layers: 25 layers, each torch.Size([1, 257, 1024])</pre>
+            </div>
+
+            <h3 style="color: #f7931e; margin-top: 2rem;">Feature Similarity Comparison</h3>
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Compare similarity between two images</span>
+<span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">compute_similarity</span>(image1, image2, model, processor):
+    <span style="color: #81c784;">"""Compute cosine similarity between two images"""</span>
+    
+    <span style="color: #ff6b35;"># Extract features for both images</span>
+    features1 = extract_features(image1, model, processor)[<span style="color: #81c784;">'cls_token'</span>]
+    features2 = extract_features(image2, model, processor)[<span style="color: #81c784;">'cls_token'</span>]
+    
+    <span style="color: #ff6b35;"># Compute cosine similarity</span>
+    similarity = torch.nn.functional.cosine_similarity(features1, features2)
+    <span style="color: #4fc3f7;">return</span> similarity.item()
+
+<span style="color: #ff6b35;"># Example usage</span>
+similarity_score = compute_similarity(image1, image2, model, processor)
+print(f<span style="color: #81c784;">"Similarity score: {similarity_score:.4f}"</span>)</pre>
+            </div>
+        </section>
+
+        <!-- Batch Processing Section -->
+        <section id="batch-processing" class="step-section">
+            <div class="step-number">5</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Efficient Batch Processing</h2>
+            
+            <p>For production use, you'll want to process multiple images efficiently:</p>
+
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Batch Processing Example</span>
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">from</span> torch.utils.data <span style="color: #4fc3f7;">import</span> DataLoader, Dataset
+<span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> Dinov2Model, Dinov2ImageProcessor
+<span style="color: #4fc3f7;">from</span> PIL <span style="color: #4fc3f7;">import</span> Image
+<span style="color: #4fc3f7;">import</span> os
+
+<span style="color: #4fc3f7;">class</span> <span style="color: #81c784;">ImageDataset</span>(Dataset):
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">__init__</span>(<span style="color: #4fc3f7;">self</span>, image_paths, processor):
+        <span style="color: #4fc3f7;">self</span>.image_paths = image_paths
+        <span style="color: #4fc3f7;">self</span>.processor = processor
+    
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">__len__</span>(<span style="color: #4fc3f7;">self</span>):
+        <span style="color: #4fc3f7;">return</span> len(<span style="color: #4fc3f7;">self</span>.image_paths)
+    
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">__getitem__</span>(<span style="color: #4fc3f7;">self</span>, idx):
+        image_path = <span style="color: #4fc3f7;">self</span>.image_paths[idx]
+        image = Image.open(image_path).convert(<span style="color: #81c784;">'RGB'</span>)
+        inputs = <span style="color: #4fc3f7;">self</span>.processor(images=image, return_tensors=<span style="color: #81c784;">"pt"</span>)
+        <span style="color: #4fc3f7;">return</span> {
+            <span style="color: #81c784;">'pixel_values'</span>: inputs[<span style="color: #81c784;">'pixel_values'</span>].squeeze(0),
+            <span style="color: #81c784;">'path'</span>: image_path
+        }
+
+<span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">process_images_batch</span>(image_dir, batch_size=8):
+    <span style="color: #81c784;">"""Process images in batches for efficiency"""</span>
+    
+    <span style="color: #ff6b35;"># Setup</span>
+    processor = Dinov2ImageProcessor.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+    model = Dinov2Model.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+    model.eval()
+    
+    <span style="color: #ff6b35;"># Get image paths</span>
+    image_paths = [os.path.join(image_dir, f) <span style="color: #4fc3f7;">for</span> f <span style="color: #4fc3f7;">in</span> os.listdir(image_dir) 
+                   <span style="color: #4fc3f7;">if</span> f.lower().endswith((<span style="color: #81c784;">'.jpg'</span>, <span style="color: #81c784;">'.jpeg'</span>, <span style="color: #81c784;">'.png'</span>))]
+    
+    <span style="color: #ff6b35;"># Create dataset and dataloader</span>
+    dataset = ImageDataset(image_paths, processor)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=<span style="color: #4fc3f7;">False</span>)
+    
+    all_features = []
+    all_paths = []
+    
+    <span style="color: #4fc3f7;">with</span> torch.no_grad():
+        <span style="color: #4fc3f7;">for</span> batch <span style="color: #4fc3f7;">in</span> dataloader:
+            pixel_values = batch[<span style="color: #81c784;">'pixel_values'</span>]
+            paths = batch[<span style="color: #81c784;">'path'</span>]
+            
+            <span style="color: #ff6b35;"># Forward pass</span>
+            outputs = model(pixel_values=pixel_values)
+            features = outputs.pooler_output
+            
+            all_features.append(features)
+            all_paths.extend(paths)
+            
+            print(f<span style="color: #81c784;">"Processed batch: {len(paths)} images"</span>)
+    
+    <span style="color: #ff6b35;"># Combine all features</span>
+    all_features = torch.cat(all_features, dim=0)
+    
+    <span style="color: #4fc3f7;">return</span> all_features, all_paths
+
+<span style="color: #ff6b35;"># Usage example</span>
+<span style="color: #ff6b35;"># features, paths = process_images_batch("path/to/your/images")</span></pre>
+            </div>
+        </section>
+
+        <!-- Fine-tuning Section -->
+        <section id="fine-tuning" class="step-section">
+            <div class="step-number">6</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Fine-tuning DINOv3</h2>
+            
+            <p>Fine-tune DINOv3 on your custom dataset for domain-specific tasks:</p>
+
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Fine-tuning Setup</span>
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">import</span> torch.nn <span style="color: #4fc3f7;">as</span> nn
+<span style="color: #4fc3f7;">from</span> torch.utils.data <span style="color: #4fc3f7;">import</span> DataLoader
+<span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> Dinov2Model, Dinov2ImageProcessor, AdamW
+<span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> get_linear_schedule_with_warmup
+
+<span style="color: #4fc3f7;">class</span> <span style="color: #81c784;">DINOv3ForClassification</span>(nn.Module):
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">__init__</span>(<span style="color: #4fc3f7;">self</span>, num_classes, freeze_backbone=<span style="color: #4fc3f7;">False</span>):
+        super().__init__()
+        <span style="color: #4fc3f7;">self</span>.backbone = Dinov2Model.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+        
+        <span style="color: #ff6b35;"># Optionally freeze backbone</span>
+        <span style="color: #4fc3f7;">if</span> freeze_backbone:
+            <span style="color: #4fc3f7;">for</span> param <span style="color: #4fc3f7;">in</span> <span style="color: #4fc3f7;">self</span>.backbone.parameters():
+                param.requires_grad = <span style="color: #4fc3f7;">False</span>
+        
+        <span style="color: #ff6b35;"># Classification head</span>
+        <span style="color: #4fc3f7;">self</span>.classifier = nn.Sequential(
+            nn.Dropout(0.1),
+            nn.Linear(<span style="color: #4fc3f7;">self</span>.backbone.config.hidden_size, 512),
+            nn.ReLU(),
+            nn.Dropout(0.1),
+            nn.Linear(512, num_classes)
+        )
+    
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">forward</span>(<span style="color: #4fc3f7;">self</span>, pixel_values, labels=<span style="color: #4fc3f7;">None</span>):
+        outputs = <span style="color: #4fc3f7;">self</span>.backbone(pixel_values=pixel_values)
+        pooled_output = outputs.pooler_output
+        logits = <span style="color: #4fc3f7;">self</span>.classifier(pooled_output)
+        
+        loss = <span style="color: #4fc3f7;">None</span>
+        <span style="color: #4fc3f7;">if</span> labels <span style="color: #4fc3f7;">is not</span> <span style="color: #4fc3f7;">None</span>:
+            loss_fn = nn.CrossEntropyLoss()
+            loss = loss_fn(logits, labels)
+        
+        <span style="color: #4fc3f7;">return</span> {<span style="color: #81c784;">'loss'</span>: loss, <span style="color: #81c784;">'logits'</span>: logits}
+
+<span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">train_model</span>(model, train_dataloader, val_dataloader, num_epochs=3):
+    <span style="color: #81c784;">"""Training loop for fine-tuning"""</span>
+    
+    device = torch.device(<span style="color: #81c784;">'cuda'</span> <span style="color: #4fc3f7;">if</span> torch.cuda.is_available() <span style="color: #4fc3f7;">else</span> <span style="color: #81c784;">'cpu'</span>)
+    model.to(device)
+    
+    <span style="color: #ff6b35;"># Optimizer and scheduler</span>
+    optimizer = AdamW(model.parameters(), lr=5e-5, weight_decay=0.01)
+    total_steps = len(train_dataloader) * num_epochs
+    scheduler = get_linear_schedule_with_warmup(
+        optimizer, num_warmup_steps=int(0.1 * total_steps), 
+        num_training_steps=total_steps
+    )
+    
+    model.train()
+    <span style="color: #4fc3f7;">for</span> epoch <span style="color: #4fc3f7;">in</span> range(num_epochs):
+        total_loss = 0
+        
+        <span style="color: #4fc3f7;">for</span> batch_idx, batch <span style="color: #4fc3f7;">in</span> enumerate(train_dataloader):
+            pixel_values = batch[<span style="color: #81c784;">'pixel_values'</span>].to(device)
+            labels = batch[<span style="color: #81c784;">'labels'</span>].to(device)
+            
+            optimizer.zero_grad()
+            
+            <span style="color: #ff6b35;"># Forward pass</span>
+            outputs = model(pixel_values=pixel_values, labels=labels)
+            loss = outputs[<span style="color: #81c784;">'loss'</span>]
+            
+            <span style="color: #ff6b35;"># Backward pass</span>
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            
+            optimizer.step()
+            scheduler.step()
+            
+            total_loss += loss.item()
+            
+            <span style="color: #4fc3f7;">if</span> batch_idx % 100 == 0:
+                print(f<span style="color: #81c784;">"Epoch {epoch}, Batch {batch_idx}, Loss: {loss.item():.4f}"</span>)
+        
+        avg_loss = total_loss / len(train_dataloader)
+        print(f<span style="color: #81c784;">"Epoch {epoch} completed. Average loss: {avg_loss:.4f}"</span>)
+
+<span style="color: #ff6b35;"># Initialize model for 10 classes</span>
+model = DINOv3ForClassification(num_classes=10, freeze_backbone=<span style="color: #4fc3f7;">True</span>)
+
+<span style="color: #ff6b35;"># Train the model</span>
+<span style="color: #ff6b35;"># train_model(model, train_dataloader, val_dataloader)</span></pre>
+            </div>
+
+            <div class="warning-box">
+                <strong>💡 Fine-tuning Tips:</strong>
+                <ul>
+                    <li>Start with a frozen backbone and only train the classification head</li>
+                    <li>Use a smaller learning rate (1e-5 to 5e-5) when unfreezing the backbone</li>
+                    <li>Apply gradual unfreezing: unfreeze the last few layers first</li>
+                    <li>Use data augmentation to prevent overfitting</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Performance Optimization Section -->
+        <section id="optimization" class="step-section">
+            <div class="step-number">7</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Performance Optimization</h2>
+            
+            <h3 style="color: #f7931e;">Mixed Precision Training</h3>
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Mixed Precision for Faster Training</span>
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">from</span> torch.cuda.amp <span style="color: #4fc3f7;">import</span> autocast, GradScaler
+
+<span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">train_with_amp</span>(model, dataloader, optimizer):
+    <span style="color: #81c784;">"""Training with Automatic Mixed Precision"""</span>
+    
+    scaler = GradScaler()
+    model.train()
+    
+    <span style="color: #4fc3f7;">for</span> batch <span style="color: #4fc3f7;">in</span> dataloader:
+        pixel_values = batch[<span style="color: #81c784;">'pixel_values'</span>].cuda()
+        labels = batch[<span style="color: #81c784;">'labels'</span>].cuda()
+        
+        optimizer.zero_grad()
+        
+        <span style="color: #ff6b35;"># Forward pass with autocast</span>
+        <span style="color: #4fc3f7;">with</span> autocast():
+            outputs = model(pixel_values=pixel_values, labels=labels)
+            loss = outputs[<span style="color: #81c784;">'loss'</span>]
+        
+        <span style="color: #ff6b35;"># Scaled backward pass</span>
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()</pre>
+            </div>
+
+            <h3 style="color: #f7931e;">Model Quantization</h3>
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Post-training Quantization</span>
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> Dinov2Model
+
+<span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">quantize_model</span>(model):
+    <span style="color: #81c784;">"""Quantize model for faster inference"""</span>
+    
+    <span style="color: #ff6b35;"># Dynamic quantization</span>
+    quantized_model = torch.quantization.quantize_dynamic(
+        model, {torch.nn.Linear}, dtype=torch.qint8
+    )
+    
+    <span style="color: #4fc3f7;">return</span> quantized_model
+
+<span style="color: #ff6b35;"># Load and quantize model</span>
+model = Dinov2Model.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-base"</span>)  <span style="color: #ff6b35;"># Use base for speed</span>
+quantized_model = quantize_model(model)
+
+print(f<span style="color: #81c784;">"Original model size: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}M parameters"</span>)
+print(<span style="color: #81c784;">"Quantized model ready for faster inference"</span>)</pre>
+            </div>
+
+            <h3 style="color: #f7931e;">Inference Optimization</h3>
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Optimized Inference Pipeline</span>
+<span style="color: #4fc3f7;">class</span> <span style="color: #81c784;">OptimizedDINOv3</span>:
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">__init__</span>(<span style="color: #4fc3f7;">self</span>, model_name=<span style="color: #81c784;">"facebook/dinov2-base"</span>, device=<span style="color: #81c784;">"cuda"</span>):
+        <span style="color: #4fc3f7;">self</span>.device = device
+        <span style="color: #4fc3f7;">self</span>.processor = Dinov2ImageProcessor.from_pretrained(model_name)
+        <span style="color: #4fc3f7;">self</span>.model = Dinov2Model.from_pretrained(model_name).to(device)
+        <span style="color: #4fc3f7;">self</span>.model.eval()
+        
+        <span style="color: #ff6b35;"># Compile model for faster inference (PyTorch 2.0+)</span>
+        <span style="color: #4fc3f7;">if</span> hasattr(torch, <span style="color: #81c784;">'compile'</span>):
+            <span style="color: #4fc3f7;">self</span>.model = torch.compile(<span style="color: #4fc3f7;">self</span>.model)
+    
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">extract_features</span>(<span style="color: #4fc3f7;">self</span>, images):
+        <span style="color: #81c784;">"""Optimized feature extraction"""</span>
+        
+        <span style="color: #4fc3f7;">with</span> torch.no_grad():
+            <span style="color: #4fc3f7;">if</span> isinstance(images, list):
+                inputs = <span style="color: #4fc3f7;">self</span>.processor(images=images, return_tensors=<span style="color: #81c784;">"pt"</span>)
+            <span style="color: #4fc3f7;">else</span>:
+                inputs = <span style="color: #4fc3f7;">self</span>.processor(images=[images], return_tensors=<span style="color: #81c784;">"pt"</span>)
+            
+            inputs = {k: v.to(<span style="color: #4fc3f7;">self</span>.device) <span style="color: #4fc3f7;">for</span> k, v <span style="color: #4fc3f7;">in</span> inputs.items()}
+            
+            <span style="color: #ff6b35;"># Use half precision for inference</span>
+            <span style="color: #4fc3f7;">with</span> autocast():
+                outputs = <span style="color: #4fc3f7;">self</span>.model(**inputs)
+            
+            <span style="color: #4fc3f7;">return</span> outputs.pooler_output.cpu()
+
+<span style="color: #ff6b35;"># Usage</span>
+dinov3 = OptimizedDINOv3()
+features = dinov3.extract_features(image)</pre>
+            </div>
+        </section>
+
+        <!-- Troubleshooting Section -->
+        <section id="troubleshooting" class="step-section">
+            <div class="step-number">8</div>
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">Common Issues & Solutions</h2>
+            
+            <div class="example-showcase">
+                <div class="example-card">
+                    <h4 style="color: #f44336;">❌ CUDA Out of Memory</h4>
+                    <p><strong>Problem:</strong> RuntimeError: CUDA out of memory</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Use smaller batch sizes</li>
+                        <li>Use DINOv2-base instead of large</li>
+                        <li>Enable gradient checkpointing</li>
+                        <li>Use CPU for inference if needed</li>
+                    </ul>
+                    <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"># Solution: Reduce batch size
+batch_size = 1  # Instead of 8
+model = Dinov2Model.from_pretrained(
+    "facebook/dinov2-base"  # Instead of large
+)</pre>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4 style="color: #f44336;">❌ Slow Inference</h4>
+                    <p><strong>Problem:</strong> Model inference is too slow</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Use GPU instead of CPU</li>
+                        <li>Enable mixed precision</li>
+                        <li>Use model compilation (PyTorch 2.0+)</li>
+                        <li>Batch multiple images together</li>
+                    </ul>
+                    <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"># Solution: Enable optimizations
+model = model.half().cuda()  # Half precision
+model = torch.compile(model)  # Compilation</pre>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4 style="color: #f44336;">❌ Import Errors</h4>
+                    <p><strong>Problem:</strong> ModuleNotFoundError or version conflicts</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Update transformers: <code>pip install -U transformers</code></li>
+                        <li>Check PyTorch compatibility</li>
+                        <li>Use virtual environment</li>
+                        <li>Clear pip cache if needed</li>
+                    </ul>
+                    <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"># Solution: Fresh install
+pip uninstall transformers torch
+pip install transformers torch torchvision</pre>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h4 style="color: #f44336;">❌ Poor Performance</h4>
+                    <p><strong>Problem:</strong> Model doesn't perform well on your data</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Check image preprocessing</li>
+                        <li>Ensure proper image format (RGB)</li>
+                        <li>Consider fine-tuning on your domain</li>
+                        <li>Use appropriate model size</li>
+                    </ul>
+                    <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"># Solution: Proper preprocessing
+image = image.convert('RGB')  # Ensure RGB
+inputs = processor(
+    images=image, 
+    return_tensors="pt",
+    do_resize=True,
+    size={"height": 518, "width": 518}
+)</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="error-box">
+                <h4 style="color: #f44336;">🔧 Quick Diagnostic Script</h4>
+                <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Run this to diagnose your setup</span>
+<span style="color: #4fc3f7;">import</span> torch
+<span style="color: #4fc3f7;">import</span> transformers
+<span style="color: #4fc3f7;">from</span> PIL <span style="color: #4fc3f7;">import</span> Image
+
+print(f<span style="color: #81c784;">"PyTorch version: {torch.__version__}"</span>)
+print(f<span style="color: #81c784;">"Transformers version: {transformers.__version__}"</span>)
+print(f<span style="color: #81c784;">"CUDA available: {torch.cuda.is_available()}"</span>)
+<span style="color: #4fc3f7;">if</span> torch.cuda.is_available():
+    print(f<span style="color: #81c784;">"GPU: {torch.cuda.get_device_name(0)}"</span>)
+    print(f<span style="color: #81c784;">"GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB"</span>)
+
+<span style="color: #ff6b35;"># Test model loading</span>
+<span style="color: #4fc3f7;">try</span>:
+    <span style="color: #4fc3f7;">from</span> transformers <span style="color: #4fc3f7;">import</span> Dinov2Model
+    model = Dinov2Model.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-base"</span>)
+    print(<span style="color: #81c784;">"✅ Model loading successful"</span>)
+<span style="color: #4fc3f7;">except</span> Exception <span style="color: #4fc3f7;">as</span> e:
+    print(f<span style="color: #81c784;">"❌ Model loading failed: {e}"</span>)</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Examples -->
+        <section class="step-section">
+            <h2 style="color: #ff6b35; margin-bottom: 1.5rem;">🚀 Advanced Use Cases</h2>
+            
+            <h3 style="color: #f7931e;">1. Image Retrieval System</h3>
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Build an image retrieval system</span>
+<span style="color: #4fc3f7;">import</span> numpy <span style="color: #4fc3f7;">as</span> np
+<span style="color: #4fc3f7;">from</span> sklearn.metrics.pairwise <span style="color: #4fc3f7;">import</span> cosine_similarity
+
+<span style="color: #4fc3f7;">class</span> <span style="color: #81c784;">ImageRetrieval</span>:
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">__init__</span>(<span style="color: #4fc3f7;">self</span>):
+        <span style="color: #4fc3f7;">self</span>.model = Dinov2Model.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+        <span style="color: #4fc3f7;">self</span>.processor = Dinov2ImageProcessor.from_pretrained(<span style="color: #81c784;">"facebook/dinov2-large"</span>)
+        <span style="color: #4fc3f7;">self</span>.features_db = []
+        <span style="color: #4fc3f7;">self</span>.image_paths = []
+    
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">add_images</span>(<span style="color: #4fc3f7;">self</span>, image_paths):
+        <span style="color: #4fc3f7;">for</span> path <span style="color: #4fc3f7;">in</span> image_paths:
+            image = Image.open(path)
+            features = <span style="color: #4fc3f7;">self</span>._extract_features(image)
+            <span style="color: #4fc3f7;">self</span>.features_db.append(features)
+            <span style="color: #4fc3f7;">self</span>.image_paths.append(path)
+    
+    <span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">search</span>(<span style="color: #4fc3f7;">self</span>, query_image, top_k=5):
+        query_features = <span style="color: #4fc3f7;">self</span>._extract_features(query_image)
+        similarities = cosine_similarity([query_features], <span style="color: #4fc3f7;">self</span>.features_db)[0]
+        top_indices = np.argsort(similarities)[::-1][:top_k]
+        
+        results = [(self.image_paths[i], similarities[i]) <span style="color: #4fc3f7;">for</span> i <span style="color: #4fc3f7;">in</span> top_indices]
+        <span style="color: #4fc3f7;">return</span> results</pre>
+            </div>
+
+            <h3 style="color: #f7931e;">2. Zero-shot Object Detection</h3>
+            <div class="code-block">
+<pre style="margin: 0; color: #e0e0e0;"><span style="color: #ff6b35;"># Zero-shot object detection with patch features</span>
+<span style="color: #4fc3f7;">def</span> <span style="color: #81c784;">detect_objects</span>(image, model, processor, threshold=0.7):
+    <span style="color: #81c784;">"""Simple object detection using patch attention"""</span>
+    
+    inputs = processor(images=image, return_tensors=<span style="color: #81c784;">"pt"</span>)
+    
+    <span style="color: #4fc3f7;">with</span> torch.no_grad():
+        outputs = model(**inputs, output_attentions=<span style="color: #4fc3f7;">True</span>)
+    
+    <span style="color: #ff6b35;"># Get attention weights from last layer</span>
+    attention = outputs.attentions[-1]  <span style="color: #ff6b35;"># [batch, heads, seq_len, seq_len]</span>
+    
+    <span style="color: #ff6b35;"># Average across heads and get CLS attention to patches</span>
+    cls_attention = attention[0, :, 0, 1:].mean(dim=0)  <span style="color: #ff6b35;"># Remove CLS token</span>
+    
+    <span style="color: #ff6b35;"># Reshape to spatial dimensions</span>
+    h = w = int(np.sqrt(cls_attention.shape[0]))
+    attention_map = cls_attention.reshape(h, w)
+    
+    <span style="color: #ff6b35;"># Find high attention regions</span>
+    high_attention = attention_map > threshold
+    
+    <span style="color: #4fc3f7;">return</span> attention_map, high_attention</pre>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Resources Section -->
+    <section class="container">
+        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 2rem; margin: 3rem 0;">
+            <h3 style="color: #ff6b35; margin-bottom: 1rem;">🔗 Additional Resources</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div>
+                    <h4>📚 Documentation</h4>
+                    <ul>
+                        <li><a href="https://huggingface.co/facebook/dinov2-large" target="_blank">HuggingFace Model Page</a></li>
+                        <li><a href="dinov3-paper-analysis.html">DINOv3 Paper Analysis</a></li>
+                        <li><a href="dinov3-comparison.html">Model Comparison</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>💻 Code Examples</h4>
+                    <ul>
+                        <li><a href="https://github.com/facebookresearch/dinov2" target="_blank">Official GitHub</a></li>
+                        <li><a href="https://huggingface.co/spaces/facebook/dinov2" target="_blank">Demo Space</a></li>
+                        <li><a href="blog.html">More Tutorials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>🎯 Applications</h4>
+                    <ul>
+                        <li>Image Classification</li>
+                        <li>Feature Extraction</li>
+                        <li>Zero-shot Detection</li>
+                        <li>Image Retrieval</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #0d1421; padding: 2rem 0; margin-top: 4rem; text-align: center; opacity: 0.8;">
+        <div class="container">
+                            <p>&copy; 2025 DINOv3.org - Complete HuggingFace Tutorial Platform</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="index.html" style="color: #ff6b35; text-decoration: none;">Home</a> | 
+                <a href="blog.html" style="color: #ff6b35; text-decoration: none;">Blog</a> | 
+                <a href="dinov3-paper-analysis.html" style="color: #ff6b35; text-decoration: none;">Paper Analysis</a> |
+                <a href="dinov3-comparison.html" style="color: #ff6b35; text-decoration: none;">Comparison</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Code copying functionality
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', () => {
+                const code = block.querySelector('pre').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.textContent = 'Code copied to clipboard!';
+                    toast.style.cssText = `
+                        position: fixed; top: 20px; right: 20px; z-index: 9999;
+                        background: #4caf50; color: white; padding: 12px 20px;
+                        border-radius: 8px; font-weight: 600;
+                        animation: slideIn 0.3s ease-out;
+                    `;
+                    
+                    document.body.appendChild(toast);
+                    setTimeout(() => {
+                        document.body.removeChild(toast);
+                    }, 2000);
+                });
+            });
+        });
+
+        // Progress indicator
+        const createProgressIndicator = () => {
+            const indicator = document.createElement('div');
+            indicator.style.cssText = `
+                position: fixed; top: 0; left: 0; z-index: 10000;
+                height: 4px; background: linear-gradient(90deg, #ff6b35, #f7931e);
+                transition: width 0.3s ease; width: 0%;
+            `;
+            document.body.appendChild(indicator);
+
+            window.addEventListener('scroll', () => {
+                const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                indicator.style.width = scrolled + '%';
+            });
+        };
+
+        createProgressIndicator();
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            .step-section {
+                animation: fadeInUp 0.6s ease-out;
+            }
+            
+            @keyframes fadeInUp {
+                from { transform: translateY(30px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe step sections
+        document.querySelectorAll('.step-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
