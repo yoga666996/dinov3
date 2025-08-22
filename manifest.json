@@ -50,5 +50,33 @@
         }
     ],
     "categories": ["productivity", "education", "technology"],
-    "lang": "en-US"
+    "lang": "en-US",
+    "scope": "/",
+    "prefer_related_applications": false,
+    "shortcuts": [
+        {
+            "name": "模型演示",
+            "url": "/#demo",
+            "description": "查看DINOv3模型演示"
+        },
+        {
+            "name": "技术文档",
+            "url": "/#docs",
+            "description": "阅读技术文档"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "platform": "wide"
+        }
+    ],
+    "protocol_handlers": [
+        {
+            "protocol": "web+dinov3",
+            "url": "/?action=%s"
+        }
+    ]
 }
